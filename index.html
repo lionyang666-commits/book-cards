@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>书架旁的风筝 · 读书卡片</title>
+<style>
+  /* ============================================
+     设计系统 — 暖金/琥珀色系
+     参考：小红书风格卡片 UI
+     ============================================ */
+  :root {
+    /* 主色 */
+    --accent:         #c4a96a;
+    --accent-rgb:     196, 169, 106;
+    --accent-deep:    #a68a4e;
+    --accent-light:   #dfc98a;
+
+    /* 文字 */
+    --text-primary:   #1a1614;
+    --text-body:      #5a5248;
+    --text-muted:     #9e958c;
+    --text-faint:     #c4bcb4;
+
+    /* 阴影 */
+    --shadow-sm:      0 1px 3px rgba(60,40,20,0.04);
+    --shadow-md:      0 4px 16px rgba(60,40,20,0.06);
+    --shadow-lg:      0 8px 32px rgba(60,40,20,0.08);
+    --shadow-xl:      0 16px 48px rgba(60,40,20,0.10);
+    --shadow-hover:   0 12px 40px rgba(60,40,20,0.12);
+
+    /* 圆角 */
+    --radius-sm:      8px;
+    --radius-md:      16px;
+    --radius-lg:      20px;
+    --radius-xl:      28px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background:
+      radial-gradient(ellipse 900px 600px at 50% -10%, rgba(var(--accent-rgb), 0.07) 0%, transparent 60%),
+      linear-gradient(175deg, #fcf9f6 0%, #f6f0e9 40%, #f0e9e0 100%);
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* ============================================
+     头部
+     ============================================ */
+  .header {
+    text-align: center;
+    padding: 80px 24px 56px;
+    position: relative;
+  }
+  .header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .header .tag {
+    display: inline-block;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 5px;
+    font-weight: 500;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .header h1 {
+    font-size: 40px;
+    font-weight: 750;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+    color: var(--text-primary);
+  }
+  .header .subtitle {
+    font-size: 17px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+  .header .count {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--text-faint);
+    letter-spacing: 1px;
+  }
+
+  /* ============================================
+     书籍网格
+     ============================================ */
+  .book-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 44px 24px 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+  }
+
+  /* ============================================
+     书籍卡片 — 优化版
+     特点：双层边框、多层阴影、悬浮抬升
+     ============================================ */
+  .book-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition:
+      transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      box-shadow 0.35s ease;
+    /* 外层阴影：给卡片一个温和的漂浮感 */
+    box-shadow:
+      var(--shadow-sm),
+      var(--shadow-md);
+    /* 内边框装饰：1px 半透明白边增加精致感 */
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  /* 第二层内边框 — 用伪元素实现细腻描边 */
+  .book-card::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: calc(var(--radius-lg) - 1px);
+    border: 1px solid rgba(180,160,140,0.08);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .book-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      var(--shadow-sm),
+      var(--shadow-lg),
+      var(--shadow-hover);
+  }
+
+  /* 封面缩略图 */
+  .book-card .cover {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f0ebe4;
+    position: relative;
+  }
+  .book-card .cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.02));
+    pointer-events: none;
+  }
+  .book-card .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .book-card:hover .cover img {
+    transform: scale(1.05);
+  }
+
+  /* 底部信息区 */
+  .book-card .info {
+    padding: 18px 22px 22px;
+    position: relative;
+    background: linear-gradient(180deg, #fff 0%, #fefdfc 100%);
+  }
+  .book-card .info .book-tag {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2.5px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+  }
+  .book-card .info .book-title {
+    font-size: 19px;
+    font-weight: 720;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    letter-spacing: 0.5px;
+  }
+  .book-card .info .book-author {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .book-card .info .book-meta {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+  }
+  .book-card .info .book-meta .sep {
+    color: var(--text-faint);
+    opacity: 0.5;
+  }
+
+  /* 空状态提示 */
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--text-muted);
+  }
+  .empty-state .icon {
+    font-size: 42px;
+    color: rgba(var(--accent-rgb), 0.2);
+    margin-bottom: 18px;
+  }
+  .empty-state p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ============================================
+     灯箱遮罩 — 毛玻璃效果
+     ============================================ */
+  .gallery-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,16,12,0.88);
+    backdrop-filter: blur(16px) saturate(0.9);
+    -webkit-backdrop-filter: blur(16px) saturate(0.9);
+    z-index: 1000;
+    padding: 32px;
+    overflow-y: auto;
+  }
+  .gallery-overlay.active {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 灯箱头部 */
+  .gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .gallery-header .gallery-title {
+    color: rgba(255,255,255,0.5);
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-weight: 400;
+  }
+  .gallery-header .gallery-title strong {
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+  }
+  .gallery-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.3);
+    font-size: 28px;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    transition: color 0.2s;
+    border-radius: 6px;
+  }
+  .gallery-close:hover {
+    color: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* 灯箱卡片网格 */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    flex: 1;
+    align-content: center;
+    max-width: 1200px;
+    margin: 20px auto 0;
+    width: 100%;
+  }
+  .gallery-grid .gallery-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .gallery-grid .gallery-card:hover {
+    transform: scale(1.015);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  }
+  .gallery-grid .gallery-card img {
+    width: 100%;
+    display: block;
+  }
+
+  /* ============================================
+     底部关注区 — 二维码卡片
+     ============================================ */
+  .footer-follow {
+    text-align: center;
+    padding: 56px 24px 60px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 700px 400px at 50% 0%, rgba(var(--accent-rgb), 0.05) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(var(--accent-rgb), 0.02) 0%, transparent 40%);
+  }
+  .footer-follow::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+  .footer-follow .heading {
+    font-size: 15px;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+    font-weight: 400;
+    margin-bottom: 32px;
+  }
+  .footer-follow .qr-row {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+  .footer-follow .qr-card {
+    background: linear-gradient(160deg, #fefdfc, #fff);
+    border-radius: var(--radius-md);
+    padding: 18px 18px 16px;
+    width: 154px;
+    position: relative;
+    box-shadow:
+      0 1px 3px rgba(60,40,20,0.04),
+      0 4px 14px rgba(60,40,20,0.06);
+    border: 1px solid rgba(255,255,255,0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .footer-follow .qr-card::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: calc(var(--radius-md) - 1px);
+    border: 1px solid rgba(180,160,140,0.08);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .footer-follow .qr-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 3px rgba(60,40,20,0.04),
+      0 8px 28px rgba(60,40,20,0.10);
+  }
+  .footer-follow .qr-card img {
+    width: 104px;
+    height: 104px;
+    display: block;
+    margin: 0 auto 12px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-follow .qr-card .label {
+    font-size: 13px;
+    color: var(--text-body);
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-follow .qr-card .sublabel {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+    margin-top: 1px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============================================
+     响应式
+     ============================================ */
+  @media (max-width: 800px) {
+    .header { padding: 48px 20px 36px; }
+    .header h1 { font-size: 28px; }
+
+    .book-grid {
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+      padding: 28px 16px 60px;
+    }
+
+    .footer-follow { padding: 40px 20px 44px; }
+    .footer-follow .qr-row { gap: 24px; }
+    .footer-follow .qr-card { width: 140px; padding: 14px 14px 12px; }
+    .footer-follow .qr-card img { width: 96px; height: 96px; }
+
+    .gallery-overlay { padding: 14px; }
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .book-grid {
+      grid-template-columns: 1fr;
+      max-width: 360px;
+    }
+    .footer-follow { padding: 32px 16px 36px; }
+    .footer-follow .qr-row { gap: 16px; flex-direction: column; align-items: center; }
+    .footer-follow .qr-card { width: 132px; }
+    .footer-follow .qr-card img { width: 88px; height: 88px; }
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+    }
+  }
+
+  /* ===== 滚动条美化 ===== */
+  .gallery-overlay::-webkit-scrollbar { width: 5px; }
+  .gallery-overlay::-webkit-scrollbar-track { background: transparent; }
+  .gallery-overlay::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+  /* ===== 进入动画 ===== */
+  @keyframes card-enter {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .book-card {
+    animation: card-enter 0.5s ease both;
+  }
+  .book-card:nth-child(1) { animation-delay: 0.02s; }
+  .book-card:nth-child(2) { animation-delay: 0.06s; }
+  .book-card:nth-child(3) { animation-delay: 0.10s; }
+  .book-card:nth-child(4) { animation-delay: 0.14s; }
+  .book-card:nth-child(5) { animation-delay: 0.18s; }
+  .book-card:nth-child(6) { animation-delay: 0.22s; }
+  .book-card:nth-child(7) { animation-delay: 0.26s; }
+  .book-card:nth-child(8) { animation-delay: 0.30s; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="tag">READING · NOTES</div>
+  <h1>书架旁的风筝</h1>
+  <div class="subtitle">每本书拆解为 6 张图文卡片</div>
+  <div class="count" id="bookCount"></div>
+</div>
+
+<div class="book-grid" id="bookGrid">
+  <!-- 由 JS 动态渲染 -->
+</div>
+
+<!-- ===== 关注区 ===== -->
+<div class="footer-follow">
+  <div class="heading">在别处找到我们</div>
+  <div class="qr-row">
+    <div class="qr-card">
+      <img src="images/qr-xiaohongshu.jpg" alt="小红书" loading="lazy">
+      <div class="label">小红书</div>
+      <div class="sublabel">@ 书架旁的风筝</div>
+    </div>
+    <div class="qr-card">
+      <img src="images/qr-wechat.jpg" alt="公众号" loading="lazy">
+      <div class="label">公众号</div>
+      <div class="sublabel">书架旁的风筝</div>
+    </div>
+  </div>
+</div>
+
+<!-- 灯箱 -->
+<div class="gallery-overlay" id="gallery">
+  <div class="gallery-header">
+    <div class="gallery-title" id="galleryTitle"></div>
+    <button class="gallery-close" id="galleryClose">&times;</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- 由 JS 动态渲染 -->
+  </div>
+</div>
+
+<script>
+// ===== 书籍数据 =====
+const books = [
+  {
+    id: "huozhe",
+    title: "活着",
+    author: "余华",
+    tag: "读书卡片",
+    date: "2026.05",
+    path: "books/huozhe"
+  },
+  // {
+  //   id: "next-book",
+  //   title: "书名",
+  //   author: "作者",
+  //   tag: "读书卡片",
+  //   date: "2026.06",
+  //   path: "books/next-book"
+  // },
+  {
+    id: "waldon",
+    title: "瓦尔登湖",
+    author: "亨利·戴维·梭罗",
+    tag: "读书卡片",
+    date: "2026.05",
+    path: "books/waldon"
+  },
+  {
+    id: "bainian",
+    title: "百年孤独",
+    author: "加西亚·马尔克斯",
+    tag: "读书卡片",
+    date: "2026.05",
+    path: "books/bainian"
+  }
+];
+
+// ===== 渲染书籍网格 =====
+function renderGrid() {
+  const grid = document.getElementById("bookGrid");
+  const count = document.getElementById("bookCount");
+
+  if (books.length === 0) {
+    grid.innerHTML =
+      '<div class="empty-state">' +
+      '  <div class="icon">&#128214;</div>' +
+      '  <p>还没有读书卡片<br>完成第一本书的卡片制作后，它会出现在这里</p>' +
+      '</div>';
+    count.textContent = "共 0 本书";
+    return;
+  }
+
+  count.textContent = "共 " + books.length + " 本书";
+
+  grid.innerHTML = books.map((book, index) =>
+    '<div class="book-card" onclick="openGallery(' + index + ')">' +
+    '  <div class="cover">' +
+    '    <img src="' + book.path + '/card-01.png" alt="' + book.title + '" loading="lazy">' +
+    '  </div>' +
+    '  <div class="info">' +
+    '    <div class="book-tag">' + book.tag + '</div>' +
+    '    <div class="book-title">' + book.title + '</div>' +
+    '    <div class="book-author">' + book.author + '</div>' +
+    '    <div class="book-meta">' +
+    '      <span>' + book.date + '</span>' +
+    '      <span class="sep">·</span>' +
+    '      <span>6 张卡片</span>' +
+    '    </div>' +
+    '  </div>' +
+    '</div>'
+  ).join("");
+}
+
+// ===== 灯箱控制 =====
+function openGallery(index) {
+  const book = books[index];
+  if (!book) return;
+
+  const overlay = document.getElementById("gallery");
+  const titleEl = document.getElementById("galleryTitle");
+  const grid = document.getElementById("galleryGrid");
+
+  titleEl.innerHTML = '<strong>' + book.title + '</strong> · ' + book.author + ' · 共 6 张';
+
+  grid.innerHTML = "";
+  for (let i = 1; i <= 6; i++) {
+    const num = String(i).padStart(2, "0");
+    const div = document.createElement("div");
+    div.className = "gallery-card";
+    div.innerHTML =
+      '<img src="' + book.path + '/card-' + num + '.png" alt="' + book.title + ' 卡片 ' + i + '">';
+    grid.appendChild(div);
+  }
+
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeGallery() {
+  document.getElementById("gallery").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") closeGallery();
+});
+
+document.getElementById("galleryClose").addEventListener("click", closeGallery);
+
+document.getElementById("gallery").addEventListener("click", function(e) {
+  if (e.target === this) closeGallery();
+});
+
+renderGrid();
+</script>
+
+</body>
+</html>
