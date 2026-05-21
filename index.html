@@ -270,6 +270,11 @@
     --book-accent-rgb: 196, 69, 78;
     background: linear-gradient(135deg, rgba(20,8,10,0.96), rgba(25,12,15,0.92));
   }
+  .gallery-overlay[data-book="yulezhisi"] {
+    --book-accent: #C9A040;
+    --book-accent-rgb: 201, 160, 64;
+    background: linear-gradient(135deg, rgba(15,12,6,0.96), rgba(20,16,8,0.92));
+  }
   .gallery-overlay.active {
     display: flex;
     flex-direction: column;
@@ -735,6 +740,14 @@ const books = [
     tag: "读书卡片",
     date: "2026.05",
     path: "books/wuhezhizhong"
+  },
+  {
+    id: "yulezhisi",
+    title: "娱乐至死",
+    author: "尼尔·波兹曼",
+    tag: "认知观察",
+    date: "2026.05",
+    path: "books/yulezhisi"
   }
 ];
 
