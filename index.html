@@ -265,6 +265,11 @@
     --book-accent-rgb: 122, 158, 158;
     background: linear-gradient(135deg, rgba(15,20,22,0.96), rgba(22,30,33,0.92));
   }
+  .gallery-overlay[data-book="wuhezhizhong"] {
+    --book-accent: #C4454E;
+    --book-accent-rgb: 196, 69, 78;
+    background: linear-gradient(135deg, rgba(20,8,10,0.96), rgba(25,12,15,0.92));
+  }
   .gallery-overlay.active {
     display: flex;
     flex-direction: column;
@@ -722,6 +727,14 @@ const books = [
     tag: "读书卡片",
     date: "2026.05",
     path: "books/beitanyongqi"
+  },
+  {
+    id: "wuhezhizhong",
+    title: "乌合之众",
+    author: "古斯塔夫·勒庞",
+    tag: "读书卡片",
+    date: "2026.05",
+    path: "books/wuhezhizhong"
   }
 ];
 
