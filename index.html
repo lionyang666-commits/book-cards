@@ -260,6 +260,11 @@
     --book-accent-rgb: 255, 215, 0;
     background: linear-gradient(135deg, rgba(8,8,8,0.96), rgba(20,20,20,0.92));
   }
+  .gallery-overlay[data-book="beitanyongqi"] {
+    --book-accent: #7A9E9E;
+    --book-accent-rgb: 122, 158, 158;
+    background: linear-gradient(135deg, rgba(15,20,22,0.96), rgba(22,30,33,0.92));
+  }
   .gallery-overlay.active {
     display: flex;
     flex-direction: column;
@@ -709,6 +714,14 @@ const books = [
     tag: "读书卡片",
     date: "2026.05",
     path: "books/bainian"
+  },
+  {
+    id: "beitanyongqi",
+    title: "被讨厌的勇气",
+    author: "岸见一郎 × 古贺史健",
+    tag: "读书卡片",
+    date: "2026.05",
+    path: "books/beitanyongqi"
   }
 ];
 
