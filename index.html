@@ -3,36 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="书架旁的风筝 · 每本书拆解为6张图文卡片，读书笔记可视化展示">
-<meta property="og:title" content="书架旁的风筝 · 读书卡片">
+<meta name="description" content="精神档案馆 · 每本书拆解为6张图文卡片，读书笔记可视化展示">
+<meta property="og:title" content="精神档案馆 · 读书卡片">
 <meta property="og:description" content="每本书拆解为6张图文卡片，读书笔记可视化展示">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://your-domain.com/index.html">
-<meta property="og:image" content="https://your-domain.com/logo.png">
+<meta property="og:url" content="https://lionyang666-commits.github.io/book-cards/index.html">
+<meta property="og:image" content="https://lionyang666-commits.github.io/book-cards/logo.png">
 <link rel="icon" href="logo.png" type="image/png">
-<title>书架旁的风筝 · 读书卡片</title>
+<title>精神档案馆 · 读书卡片</title>
 <style>
   /* ============================================
-     设计系统 — 暖金/琥珀色系
-     参考：小红书风格卡片 UI
+     设计系统 — 黑金冷感
+     品牌定位：冷感认知观察 · 与人性拆解
      ============================================ */
   :root {
-    /* 主色 — 深墨绿/蓝灰 (参考《思考快与慢》配色) */
-    --accent:         #4A90D9;
-    --accent-rgb:     74, 144, 217;
-    --accent-deep:    #1A4E8A;
-    --accent-light:   #6AB0F9;
+    /* 主色 — 暗金 */
+    --accent:         #FFD700;
+    --accent-rgb:     255, 215, 0;
+    --accent-deep:    #B8860B;
+    --accent-light:   #FFF8DC;
 
-    /* 深色主题 */
-    --bg-dark-start:  #0f2027;
-    --bg-dark-mid:    #203a43;
-    --bg-dark-end:    #2c5364;
+    /* 深色主题 — 纯黑 */
+    --bg-dark-start:  #0a0a0a;
+    --bg-dark-mid:    #111111;
+    --bg-dark-end:    #1a1a1a;
 
-    /* 文字 */
-    --text-primary:   #1a1a1e;
-    --text-body:      #555;
-    --text-muted:     #999;
-    --text-faint:     #bbb;
+    /* 文字 — 骨白 */
+    --text-primary:   #f4f1ea;
+    --text-body:      #cccccc;
+    --text-muted:     #999999;
+    --text-faint:     #666666;
 
     /* 阴影 — 更轻更淡 */
     --shadow-sm:      0 1px 3px rgba(0,0,0,0.04);
@@ -635,7 +635,7 @@
 
 <div class="header">
   <div class="tag">READING · NOTES</div>
-  <h1>书架旁的风筝</h1>
+  <h1>精神档案馆</h1>
   <div class="subtitle">每本书拆解为 6 张图文卡片，用视觉讲述阅读思考</div>
   <div class="count" id="bookCount"></div>
 </div>
@@ -651,12 +651,12 @@
     <div class="qr-card">
       <img src="images/qr-xiaohongshu.jpg" alt="小红书二维码" loading="lazy">
       <div class="label">小红书</div>
-      <div class="sublabel">@ 书架旁的风筝</div>
+      <div class="sublabel">@ 精神档案馆</div>
     </div>
     <div class="qr-card">
       <img src="images/qr-wechat.jpg" alt="微信公众号二维码" loading="lazy">
       <div class="label">公众号</div>
-      <div class="sublabel">书架旁的风筝</div>
+      <div class="sublabel">精神档案馆</div>
     </div>
   </div>
 </div>
@@ -702,7 +702,7 @@ const books = [
     id: "huozhe",
     title: "活着",
     author: "余华",
-    tag: "读书卡片",
+    tag: "认知观察",
     date: "2026.05",
     path: "books/huozhe"
   },
@@ -710,7 +710,7 @@ const books = [
     id: "sikao",
     title: "思考，快与慢",
     author: "丹尼尔·卡尼曼",
-    tag: "读书卡片",
+    tag: "认知观察",
     date: "2026.05",
     path: "books/sikao"
   },
@@ -718,7 +718,7 @@ const books = [
     id: "waldon",
     title: "瓦尔登湖",
     author: "亨利·戴维·梭罗",
-    tag: "读书卡片",
+    tag: "认知观察",
     date: "2026.05",
     path: "books/waldon"
   },
@@ -726,7 +726,7 @@ const books = [
     id: "bainian",
     title: "百年孤独",
     author: "加西亚·马尔克斯",
-    tag: "读书卡片",
+    tag: "认知观察",
     date: "2026.05",
     path: "books/bainian"
   },
@@ -734,7 +734,7 @@ const books = [
     id: "beitanyongqi",
     title: "被讨厌的勇气",
     author: "岸见一郎 × 古贺史健",
-    tag: "读书卡片",
+    tag: "认知观察",
     date: "2026.05",
     path: "books/beitanyongqi"
   },
@@ -742,7 +742,7 @@ const books = [
     id: "wuhezhizhong",
     title: "乌合之众",
     author: "古斯塔夫·勒庞",
-    tag: "读书卡片",
+    tag: "认知观察",
     date: "2026.05",
     path: "books/wuhezhizhong"
   },
@@ -761,6 +761,14 @@ const books = [
     tag: "认知观察",
     date: "2026.05",
     path: "books/jingguanshehui"
+  },
+  {
+    id: "1984",
+    title: "1984",
+    author: "乔治·奥威尔",
+    tag: "认知观察",
+    date: "2026.05",
+    path: "books/1984"
   }
 ];
 
