@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>分数大师 - 游戏化学数学</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:    #3B82F6;
+    --blue-d:  #2563EB;
+    --blue-l:  #DBEAFE;
+    --teal:    #14B8A6;
+    --teal-d:  #0F766E;
+    --teal-l:  #CCFBF1;
+    --yellow:  #FBBF24;
+    --yellow-d:#D97706;
+    --yellow-l:#FEF9C3;
+    --green:   #22C55E;
+    --green-d: #16A34A;
+    --red:     #EF4444;
+    --red-l:   #FEE2E2;
+    --pink:    #EC4899;
+    --bg:      #EFF8FF;
+    --text:    #1E3A5F;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    min-height: 100%;
+  }
+
+  body {
+    font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 24px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 600px;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #confetti-container {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 9999; overflow: hidden;
+  }
+  .confetti-piece {
+    position: absolute; opacity: 0;
+    animation: confettiFall 2.2s ease-in forwards;
+  }
+  @keyframes confettiFall {
+    0%   { transform: translateY(-40px) rotate(0deg);   opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  #celebration {
+    position: fixed; inset: 0;
+    display: none; align-items: center; justify-content: center;
+    z-index: 1000; pointer-events: none;
+  }
+  #celebration.show { display: flex; }
+  .celebration-face {
+    font-size: 96px;
+    animation: facePop .75s cubic-bezier(.36,.07,.19,.97) forwards;
+  }
+  @keyframes facePop {
+    0%  { transform: scale(0);   opacity: 0; }
+    55% { transform: scale(1.4); opacity: 1; }
+    80% { transform: scale(.9);  opacity: 1; }
+    100%{ transform: scale(1.1); opacity: 0; }
+  }
+
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 4px 8px;
+  }
+  .logo-area { display: flex; align-items: center; gap: 10px; }
+  .logo-icon {
+    width: 48px; height: 48px; border-radius: 13px; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--blue), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 12px rgba(59,130,246,.35);
+  }
+  .logo-text {
+    font-family: 'Fredoka One', cursive; font-size: 24px; line-height: 1;
+    background: linear-gradient(135deg, var(--blue-d), var(--teal-d));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .logo-sub { font-size: 10px; color: var(--teal-d); font-weight: 800; letter-spacing: .4px; margin-top: 2px; }
+
+  .score-box {
+    background: linear-gradient(135deg, var(--teal), var(--blue));
+    color: #fff; border-radius: 50px; padding: 7px 16px;
+    font-size: 13px; font-weight: 800; white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(59,130,246,.3);
+  }
+  .score-box span { font-size: 18px; font-family: 'Fredoka One', cursive; }
+
+  .diff-bar {
+    display: flex; gap: 8px; padding: 4px 0 8px;
+  }
+  .diff-btn {
+    flex: 1; padding: 9px 0; border-radius: 50px;
+    font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 13px; font-weight: 800;
+    cursor: pointer; border: 3px solid transparent; transition: all .18s;
+  }
+  .diff-btn:nth-child(1) { background: var(--yellow-l); color: var(--yellow-d); border-color: var(--yellow); }
+  .diff-btn:nth-child(2) { background: var(--teal-l);   color: var(--teal-d);   border-color: var(--teal); }
+  .diff-btn:nth-child(3) { background: var(--blue-l);   color: var(--blue-d);   border-color: var(--blue); }
+  .diff-btn.active:nth-child(1) { background: var(--yellow); color: #7C3010; box-shadow: 0 3px 12px rgba(251,191,36,.5); transform: scale(1.05); }
+  .diff-btn.active:nth-child(2) { background: var(--teal);   color: #fff;    box-shadow: 0 3px 12px rgba(20,184,166,.5);  transform: scale(1.05); }
+  .diff-btn.active:nth-child(3) { background: var(--blue);   color: #fff;    box-shadow: 0 3px 12px rgba(59,130,246,.5);  transform: scale(1.05); }
+
+  .progress-wrap { padding: 0 0 4px; }
+  .progress-track { background: #D1E9FF; border-radius: 50px; height: 9px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; border-radius: 50px;
+    background: linear-gradient(90deg, var(--teal), var(--blue));
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-label { font-size: 10px; color: #64748B; font-weight: 700; text-align: right; margin-top: 2px; }
+
+  .badges-row {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+    padding: 8px 0 20px;
+  }
+  .badge {
+    width: 50px; height: 50px; border-radius: 50%; position: relative;
+    background: #D1E9FF; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; filter: grayscale(1);
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    transition: transform .3s;
+  }
+  .badge.unlocked {
+    background: linear-gradient(135deg, var(--yellow), var(--pink));
+    filter: none; box-shadow: 0 4px 14px rgba(251,191,36,.5);
+    animation: badgePop .6s cubic-bezier(.36,.07,.19,.97);
+  }
+  @keyframes badgePop {
+    0%  { transform: scale(0) rotate(-20deg); }
+    60% { transform: scale(1.3) rotate(10deg); }
+    100%{ transform: scale(1)   rotate(0); }
+  }
+  .badge-label {
+    position: absolute; bottom: -17px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; font-weight: 800; color: var(--text); white-space: nowrap;
+  }
+
+  .question-card {
+    background: #fff;
+    border-radius: 26px;
+    box-shadow: 0 6px 28px rgba(59,130,246,.10), 0 2px 6px rgba(0,0,0,.05);
+    padding: 0 16px 20px;
+    overflow: hidden;
+  }
+  .card-rainbow {
+    height: 6px; margin: 0 -16px 20px;
+    background: linear-gradient(90deg, var(--yellow), var(--teal), var(--blue), var(--pink), var(--yellow));
+    background-size: 200%;
+    animation: rainbowBar 3s linear infinite;
+  }
+  @keyframes rainbowBar { 0%{background-position:0%} 100%{background-position:200%} }
+
+  .equation-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; flex-wrap: wrap; min-height: 100px; padding: 4px 0;
+  }
+  .frac {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 2px;
+  }
+  .frac-num, .frac-den {
+    font-family: 'Fredoka One', cursive; font-size: 44px; line-height: 1; color: var(--blue-d);
+  }
+  .frac-line { width: 100%; min-width: 40px; height: 4px; border-radius: 2px; background: var(--blue-d); }
+  .mixed-whole {
+    font-family: 'Fredoka One', cursive; font-size: 44px; color: var(--blue-d);
+    line-height: 1; align-self: center; margin-right: -4px;
+  }
+  .op-sign  { font-family: 'Fredoka One', cursive; font-size: 44px; color: var(--teal-d); align-self: center; }
+  .eq-sign  { font-family: 'Fredoka One', cursive; font-size: 44px; color: var(--text);   align-self: center; }
+
+  .answer-display {
+    min-width: 84px; min-height: 84px;
+    border: 4px dashed var(--blue); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 2px; padding: 6px;
+    background: var(--blue-l); transition: all .2s;
+  }
+  .answer-display.filled  { border-style: solid; background: #fff; }
+  .answer-display.correct { border-color: var(--green); background: #F0FFF4; }
+  .answer-display.wrong   { border-color: var(--red);   background: var(--red-l); animation: shake .4s; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)}
+  }
+  .ans-frac-num, .ans-frac-den {
+    font-family: 'Fredoka One', cursive; font-size: 32px; line-height: 1; color: var(--blue-d);
+  }
+  .ans-frac-line { width: 100%; min-width: 32px; height: 3px; border-radius: 2px; background: var(--blue-d); }
+  .ans-whole { font-family: 'Fredoka One', cursive; font-size: 32px; color: var(--blue-d); }
+
+  .feedback-wrap { min-height: 38px; text-align: center; margin-top: 10px; }
+  .feedback {
+    display: inline-block;
+    font-size: 15px; font-weight: 800;
+    border-radius: 10px; padding: 5px 14px;
+  }
+  .feedback.correct { color: var(--green-d); background: #D1FAE5; }
+  .feedback.wrong   { color: var(--red);     background: var(--red-l); }
+  .feedback.hint    { color: #92400E;        background: var(--yellow-l); }
+
+  .keypad-area { margin-top: 14px; }
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
+  }
+  .key {
+    height: 56px;
+    border: none; border-radius: 13px;
+    font-family: 'Fredoka One', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform .1s, box-shadow .1s;
+    box-shadow: 0 4px 0 rgba(0,0,0,.13);
+    -webkit-tap-highlight-color: transparent;
+    display: flex; align-items: center; justify-content: center;
+    user-select: none;
+  }
+  .key:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,.1); }
+
+  .key-num   { background: #fff;            color: var(--text);    border: 2.5px solid #D1E9FF; }
+  .key-slash { background: var(--teal-l);   color: var(--teal-d);  border: 2.5px solid var(--teal); }
+  .key-space { background: var(--yellow-l); color: var(--yellow-d);border: 2.5px solid var(--yellow); font-size: 13px; }
+  .key-back  { background: #FFF0F0;         color: var(--red);     border: 2.5px solid #FECACA; }
+  .key-clear { background: var(--red-l);    color: var(--red);     border: 2.5px solid var(--red); }
+
+  .key-check {
+    grid-column: span 6;
+    height: 56px; border-radius: 15px;
+    font-family: 'Fredoka One', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 20px; cursor: pointer;
+    background: linear-gradient(135deg, var(--teal), var(--blue));
+    color: #fff; border: none;
+    box-shadow: 0 5px 0 rgba(15,118,110,.4);
+    -webkit-tap-highlight-color: transparent;
+    transition: filter .15s, transform .1s;
+  }
+  .key-check:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(15,118,110,.4); }
+
+  .key-next {
+    grid-column: span 6;
+    height: 56px; border-radius: 15px;
+    font-family: 'Fredoka One', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: 20px; cursor: pointer;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    color: #fff; border: none;
+    box-shadow: 0 5px 0 rgba(22,163,74,.4);
+    -webkit-tap-highlight-color: transparent;
+    transition: filter .15s, transform .1s;
+    display: none;
+  }
+  .key-next:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(22,163,74,.4); }
+
+  footer {
+    margin-top: 18px;
+    font-size: 11px; color: #94A3B8; font-weight: 600; text-align: center;
+    line-height: 1.8;
+  }
+  footer .oa-hint {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 6px 14px;
+    background: #fff;
+    border-radius: 50px;
+    color: var(--blue-d);
+    font-size: 11px;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(59,130,246,.1);
+  }
+
+  @media (max-width: 420px) {
+    .frac-num, .frac-den, .mixed-whole, .op-sign, .eq-sign { font-size: 34px; }
+    .answer-display { min-width: 68px; min-height: 68px; }
+    .key { height: 50px; font-size: 18px; }
+    .key-check, .key-next { height: 52px; font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="confetti-container"></div>
+<div id="celebration"><div class="celebration-face"></div></div>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo-area">
+      <div class="logo-icon">🧮</div>
+      <div>
+        <div class="logo-text">分数大师</div>
+        <div class="logo-sub">分数的加法与减法</div>
+      </div>
+    </div>
+    <div class="score-box">⭐ <span id="score-val">0</span> 题正确</div>
+  </header>
+
+  <div class="diff-bar">
+    <button class="diff-btn active" onclick="setDiff(0)">🌟 简单</button>
+    <button class="diff-btn"        onclick="setDiff(1)">🔥 中等</button>
+    <button class="diff-btn"        onclick="setDiff(2)">🚀 困难</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-label" id="prog-label">0 / 5 获得下一枚徽章</div>
+  </div>
+
+  <div class="badges-row" id="badges-row"></div>
+
+  <div class="question-card">
+    <div class="card-rainbow"></div>
+
+    <div class="equation-row" id="eq-row"></div>
+
+    <div class="feedback-wrap"><span class="feedback" id="feedback"></span></div>
+
+    <div class="keypad-area">
+      <div class="keypad" id="keypad">
+        <button class="key key-num"   onclick="pressKey('7')">7</button>
+        <button class="key key-num"   onclick="pressKey('8')">8</button>
+        <button class="key key-num"   onclick="pressKey('9')">9</button>
+        <button class="key key-slash" onclick="pressKey('/')">／</button>
+        <button class="key key-space" onclick="pressKey(' ')">带分数</button>
+        <button class="key key-back"  onclick="pressKey('⌫')">⌫</button>
+        <button class="key key-num"   onclick="pressKey('4')">4</button>
+        <button class="key key-num"   onclick="pressKey('5')">5</button>
+        <button class="key key-num"   onclick="pressKey('6')">6</button>
+        <button class="key key-num"   onclick="pressKey('1')">1</button>
+        <button class="key key-num"   onclick="pressKey('2')">2</button>
+        <button class="key key-num"   onclick="pressKey('3')">3</button>
+        <button class="key key-num"   onclick="pressKey('0')" style="grid-column:span 3">0</button>
+        <button class="key key-clear" onclick="clearInput()"  style="grid-column:span 3">✕ 清空</button>
+        <button class="key key-check" id="check-btn" onclick="checkAnswer()">✅ 检查答案</button>
+        <button class="key key-next"  id="next-btn"  onclick="nextQuestion()">▶ 下一题</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    游戏化学数学 · 分数大师 v1.0<br>
+    <span class="oa-hint">更多学科游戏，关注公众号：<b>XXXX</b></span>
+  </footer>
+
+</div>
+
+<script>
+let difficulty  = 0;
+let score       = 0;
+let badgeCount  = 0;
+const BADGE_INTERVAL = 5;
+const BADGE_ICONS  = ['🥉','🥈','🥇','🏆','💎','🌈'];
+const BADGE_LABELS = ['起步','白银','黄金','冠军','钻石','彩虹'];
+
+let currentQ = null;
+let rawInput = '';
+
+function gcd(a,b){ a=Math.abs(a); b=Math.abs(b); return b===0?a:gcd(b,a%b); }
+function lcm(a,b){ return (a*b)/gcd(a,b); }
+function simplify(n,d){
+  if(d===0) return [n,d];
+  const g=gcd(Math.abs(n),Math.abs(d));
+  return [n/g, d/g];
+}
+function rand(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+function generateQuestion(){
+  const op = pick(['+','-']);
+  if(difficulty===0){
+    const d = pick([2,3,4,5,6,8,10]);
+    let n1=rand(1,d-1), n2=rand(1,d-1);
+    if(op==='-' && n1<n2) [n1,n2]=[n2,n1];
+    const raw = op==='+'? n1+n2 : n1-n2;
+    const [rn,rd] = simplify(raw, d);
+    const ansW = rn>=rd? Math.floor(rn/rd):0;
+    const remN = rn - ansW*rd;
+    return {w1:0,n1,d1:d, op, w2:0,n2,d2:d, ansW, ansN:remN, ansD:rd};
+  }
+  if(difficulty===1){
+    const denoms=[2,3,4,5,6,8,10];
+    let d1=pick(denoms), d2=pick(denoms.filter(function(x){return x!==d1}));
+    let n1=rand(1,d1-1), n2=rand(1,d2-1);
+    const L=lcm(d1,d2);
+    let raw = op==='+'? n1*(L/d1)+n2*(L/d2) : n1*(L/d1)-n2*(L/d2);
+    if(raw<=0){ var tmp=n1;n1=n2;n2=tmp; tmp=d1;d1=d2;d2=tmp; raw=n1*(L/d1)-n2*(L/d2); }
+    if(raw<=0){ n1+=d1; raw=n1*(L/d1)-n2*(L/d2); }
+    const rn_rd=simplify(Math.abs(raw),L);
+    const rn=rn_rd[0], rd=rn_rd[1];
+    const ansW=Math.floor(rn/rd), remN=rn-ansW*rd;
+    return {w1:0,n1,d1, op, w2:0,n2,d2, ansW, ansN:remN, ansD:rd};
+  }
+  const denoms=[2,3,4,5,6];
+  let d1=pick(denoms), d2=pick(denoms);
+  let w1=rand(1,4),n1=rand(0,d1-1);
+  let w2=rand(1,4),n2=rand(0,d2-1);
+  const imp1=w1*d1+n1, imp2=w2*d2+n2;
+  const L=lcm(d1,d2);
+  let raw=op==='+'? imp1*(L/d1)+imp2*(L/d2) : imp1*(L/d1)-imp2*(L/d2);
+  if(raw<=0){ var tmp2=w1;w1=w2;w2=tmp2; tmp2=n1;n1=n2;n2=tmp2; tmp2=d1;d1=d2;d2=tmp2;
+    const a=w1*d1+n1,b=w2*d2+n2; raw=a*(L/d1)-b*(L/d2); }
+  const rn_rd2=simplify(Math.abs(raw),L);
+  const rn2=rn_rd2[0], rd2=rn_rd2[1];
+  const ansW2=Math.floor(rn2/rd2), remN2=rn2-ansW2*rd2;
+  return {w1,n1,d1, op, w2,n2,d2, ansW:ansW2, ansN:remN2, ansD:rd2};
+}
+
+function fracHTML(w,n,d){
+  var h='';
+  if(w>0) h+='<span class="mixed-whole">'+w+'</span>';
+  if(n>0||w===0){
+    h+='<span class="frac"><span class="frac-num">'+n+'</span><span class="frac-line"></span><span class="frac-den">'+d+'</span></span>';
+  }
+  return h;
+}
+
+function renderQuestion(){
+  var q=currentQ;
+  document.getElementById('eq-row').innerHTML=
+    fracHTML(q.w1,q.n1,q.d1)+
+    '<span class="op-sign">'+q.op+'</span>'+
+    fracHTML(q.w2,q.n2,q.d2)+
+    '<span class="eq-sign">=</span><div class="answer-display" id="ans-box"><span style="color:#94A3B8;font-family:\'Fredoka One\',cursive;font-size:30px">?</span></div>';
+  document.getElementById('feedback').textContent='';
+  document.getElementById('feedback').className='feedback';
+  rawInput='';
+  document.getElementById('check-btn').style.display='';
+  document.getElementById('next-btn').style.display='none';
+}
+
+function updateAnsBox(){
+  var box=document.getElementById('ans-box');
+  if(!box) return;
+  if(!rawInput){
+    box.textContent='';
+    var span=document.createElement('span');
+    span.style.cssText='color:#94A3B8;font-family:\'Fredoka One\',cursive;font-size:30px';
+    span.textContent='?';
+    box.appendChild(span);
+    box.className='answer-display'; return;
+  }
+  box.className='answer-display filled';
+  box.innerHTML=renderInputDisplay(rawInput);
+}
+
+function renderInputDisplay(raw){
+  var si=raw.indexOf(' '), fi=raw.indexOf('/');
+  if(si>=0 && fi>si){
+    return buildFracHTML(raw.slice(0,si), raw.slice(si+1));
+  }
+  if(fi>=0) return buildFracHTML('', raw);
+  return '<span class="ans-whole">'+raw+'</span>';
+}
+
+function buildFracHTML(w,fracPart){
+  var si=fracPart.indexOf('/');
+  var num=si>=0?fracPart.slice(0,si):fracPart;
+  var den=si>=0?fracPart.slice(si+1):'';
+  var h='';
+  if(w) h+='<span class="ans-whole" style="margin-right:3px">'+w+'</span>';
+  h+='<span class="frac" style="gap:1px"><span class="ans-frac-num">'+(num||'?')+'</span><span class="ans-frac-line"></span><span class="ans-frac-den">'+(den||'?')+'</span></span>';
+  return h;
+}
+
+function pressKey(k){
+  if(k==='⌫'){ rawInput=rawInput.slice(0,-1); updateAnsBox(); return; }
+  if(k==='/' && rawInput.indexOf('/')!==-1) return;
+  if(k===' ' && (rawInput.indexOf(' ')!==-1||rawInput===''||rawInput.indexOf('/')!==-1)) return;
+  if(!/[0-9\/ ]/.test(k)) return;
+  rawInput+=k; updateAnsBox();
+}
+
+function clearInput(){ rawInput=''; updateAnsBox(); }
+
+function parseInput(raw){
+  raw=raw.trim(); if(!raw) return null;
+  var si=raw.indexOf(' '), fi=raw.indexOf('/');
+  if(si>=0 && fi>si){
+    var w=parseInt(raw.slice(0,si));
+    var parts=raw.slice(si+1).split('/');
+    var n=parseInt(parts[0]),d=parseInt(parts[1]);
+    if(isNaN(w)||isNaN(n)||isNaN(d)||d===0) return null;
+    return{w:w,n:n,d:d};
+  }
+  if(fi>=0){
+    var parts2=raw.split('/');
+    var n2=parseInt(parts2[0]),d2=parseInt(parts2[1]);
+    if(isNaN(n2)||isNaN(d2)||d2===0) return null;
+    return{w:0,n:n2,d:d2};
+  }
+  var w2=parseInt(raw);
+  if(isNaN(w2)) return null;
+  return{w:w2,n:0,d:1};
+}
+
+function checkAnswer(){
+  var p=parseInput(rawInput);
+  var fb=document.getElementById('feedback');
+  var box=document.getElementById('ans-box');
+  if(!p){ fb.textContent='⚠️ 请先输入答案！'; fb.className='feedback hint'; return; }
+
+  var userImp=p.w*p.d+p.n, userD=p.d;
+  var q=currentQ;
+  var corrImp=q.ansW*q.ansD+q.ansN, corrD=q.ansD;
+  var correct=(userImp*corrD)===(corrImp*userD);
+
+  if(correct){
+    score++;
+    document.getElementById('score-val').textContent=score;
+    box.className='answer-display correct';
+    fb.textContent='🎉 完全正确！太棒了！'; fb.className='feedback correct';
+    if(score%BADGE_INTERVAL===0) unlockBadge(); else launchConfetti();
+    showCelebration();
+    document.getElementById('check-btn').style.display='none';
+    document.getElementById('next-btn').style.display='';
+    updateProgress();
+  } else {
+    box.className='answer-display wrong';
+    fb.textContent='❌ 再试一次！';
+    var hintSpan=document.createElement('span');
+    hintSpan.style.cssText='font-weight:700;color:#92400E';
+    hintSpan.textContent=buildHint(q);
+    fb.appendChild(hintSpan);
+    fb.className='feedback wrong';
+    setTimeout(function(){ box.className='answer-display filled'; },500);
+  }
+}
+
+function buildHint(q){
+  if(difficulty===0) return ' 提示：分母相同，都是 '+q.d1;
+  if(difficulty===1) return ' 提示：先通分，公分母 = '+lcm(q.d1,q.d2);
+  return ' 提示：先把带分数化成假分数再计算！';
+}
+
+function nextQuestion(){ currentQ=generateQuestion(); renderQuestion(); }
+
+function setDiff(d){
+  difficulty=d;
+  var btns=document.querySelectorAll('.diff-btn');
+  for(var i=0;i<btns.length;i++){ btns[i].classList.toggle('active',i===d); }
+  currentQ=generateQuestion(); renderQuestion();
+}
+
+function updateProgress(){
+  var p=score%BADGE_INTERVAL;
+  document.getElementById('prog').style.width=(p/BADGE_INTERVAL*100)+'%';
+  document.getElementById('prog-label').textContent=p+' / '+BADGE_INTERVAL+' 获得下一枚徽章';
+}
+
+function initBadges(){
+  var row=document.getElementById('badges-row');
+  row.textContent='';
+  BADGE_ICONS.forEach(function(icon,i){
+    var div=document.createElement('div');
+    div.className='badge'; div.id='badge-'+i;
+    div.textContent=icon;
+    var label=document.createElement('span');
+    label.className='badge-label';
+    label.textContent=BADGE_LABELS[i];
+    div.appendChild(label);
+    row.appendChild(div);
+  });
+}
+
+function unlockBadge(){
+  var el=document.getElementById('badge-'+badgeCount);
+  if(el) el.classList.add('unlocked');
+  badgeCount++;
+  launchConfetti(80); updateProgress();
+}
+
+function showCelebration(){
+  var el=document.getElementById('celebration');
+  var emojis=['😄','🥳','🎉','⭐','✨','👏','🌟'];
+  el.querySelector('.celebration-face').textContent=pick(emojis);
+  el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); },900);
+  launchConfetti();
+}
+
+function launchConfetti(count){
+  if(!count) count=45;
+  var con=document.getElementById('confetti-container');
+  var colors=['#3B82F6','#14B8A6','#FBBF24','#EC4899','#22C55E','#A855F7','#F97316'];
+  for(var i=0;i<count;i++){
+    var p=document.createElement('div');
+    p.className='confetti-piece';
+    var circle=Math.random()>.5?'50%':'3px';
+    var sz=8+Math.random()*10;
+    p.style.cssText='left:'+Math.random()*100+'%;top:-20px;background:'+pick(colors)+';border-radius:'+circle+';width:'+sz+'px;height:'+sz+'px;animation-delay:'+Math.random()*1.4+'s;animation-duration:'+(1.8+Math.random()*.8)+'s;';
+    con.appendChild(p);
+    setTimeout(function(){ p.remove(); },3000);
+  }
+}
+
+initBadges();
+currentQ=generateQuestion();
+renderQuestion();
+updateProgress();
+</script>
+</body>
+</html>
