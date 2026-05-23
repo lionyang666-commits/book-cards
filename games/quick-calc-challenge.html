@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
-<title>凑整法消消乐 - 小升初简便运算</title>
+<title>速算消消乐 - 小升初心算训练</title>
 <style>
 :root{--bg:#FFF8E7;--gr:#58CC02;--gd:#46A302;--bl:#1CB0F6;--bd:#1899D6;--or:#FF9600;--od:#E08500;--pu:#CE82FF;--pd:#A568CC;--rd:#FF4B4B;--go:#FFC800;--tx:#4B4B4B;--tl:#777;--cs:0 4px 0 rgba(0,0,0,0.12);--cr:18px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -33,7 +33,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 .cc.mt{border-color:var(--gr);background:#F0FFE0;pointer-events:none;animation:cm .5s ease forwards}
 .cc.wf{border-color:var(--rd);animation:cs2 .4s ease}
 .cc.hd{opacity:0;transform:scale(.8);pointer-events:none}
-.ci{font-size:22px;margin-bottom:4px}.ce{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:.5px;line-height:1.3}.ch{font-size:10px;color:var(--tl);font-weight:600;margin-top:3px}
+.ci{font-size:22px;margin-bottom:4px}.ce{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:.5px;line-height:1.3}.ch{font-size:10px;color:var(--tl);font-weight:600;margin-top:4px;line-height:1.3}
 @keyframes cm{0%{transform:scale(1.04)}50%{transform:scale(1.12)}100%{transform:scale(1);opacity:.6}}
 @keyframes cs2{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .ac{flex:1;min-width:100px;max-width:140px;border-radius:var(--cr);padding:18px 10px;text-align:center;cursor:pointer;box-shadow:var(--cs);border:none;transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s,opacity .3s;position:relative;color:#fff}
@@ -66,17 +66,12 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 .co2.sh{display:flex}
 .cert{background:#fff;border-radius:24px;padding:28px 20px 24px;text-align:center;max-width:380px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.1);position:relative;border:3px solid var(--go)}
 .crb{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--go);color:#7C5510;padding:4px 20px;border-radius:50px;font-size:11px;font-weight:800;white-space:nowrap}
-.cstar{font-size:60px;display:block;margin-bottom:8px}
-.certt{font-size:22px;font-weight:900;color:var(--tx);margin-bottom:4px}
-.certsub{font-size:12px;color:var(--tl);font-weight:600;margin-bottom:16px}
-.cstat{display:flex;justify-content:center;gap:20px;margin-bottom:20px}
-.csi{text-align:center}.cv{font-size:28px;font-weight:900;font-family:'Fredoka One',cursive;color:var(--gr)}.cl2{font-size:11px;color:var(--tl);font-weight:600}
+.cstar{font-size:60px;display:block;margin-bottom:8px}.certt{font-size:22px;font-weight:900;color:var(--tx);margin-bottom:4px}.certsub{font-size:12px;color:var(--tl);font-weight:600;margin-bottom:16px}
+.cstat{display:flex;justify-content:center;gap:24px;margin-bottom:20px}.csi{text-align:center}.cv{font-size:28px;font-weight:900;font-family:'Fredoka One',cursive;color:var(--gr)}.cl2{font-size:11px;color:var(--tl);font-weight:600}
 .cbeat{background:linear-gradient(135deg,#FFF3CD,#FFE69C);border-radius:16px;padding:14px;margin-bottom:20px;font-size:18px;font-weight:900;color:#7C5510}
 .cbeat big{font-size:28px;display:block}
-.cinp{width:100%;padding:12px 16px;border-radius:50px;border:2.5px solid #E5E0D5;font-size:16px;text-align:center;font-weight:700;color:var(--tx);outline:none;margin-bottom:12px;transition:border-color .2s}
-.cinp:focus{border-color:var(--gr)}
-.csbtn{display:block;width:100%;padding:14px;background:var(--gr);color:#fff;border:none;border-radius:50px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 var(--gd);transition:transform .15s}
-.csbtn:active{transform:scale(.96);box-shadow:0 1px 0 var(--gd)}
+.cinp{width:100%;padding:12px 16px;border-radius:50px;border:2.5px solid #E5E0D5;font-size:16px;text-align:center;font-weight:700;color:var(--tx);outline:none;margin-bottom:12px;transition:border-color .2s}.cinp:focus{border-color:var(--gr)}
+.csbtn{display:block;width:100%;padding:14px;background:var(--gr);color:#fff;border:none;border-radius:50px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 var(--gd);transition:transform .15s}.csbtn:active{transform:scale(.96);box-shadow:0 1px 0 var(--gd)}
 .crest{display:block;width:100%;padding:10px;margin-top:8px;background:transparent;color:var(--tl);border:none;font-size:14px;font-weight:600;cursor:pointer}
 .gf{text-align:center;padding:16px 0 8px;font-size:10px;color:#C0B8A8;font-weight:600}
 @media(max-width:380px){.cc{padding:12px 8px}.ce{font-size:15px}.av{font-size:22px}.cr{gap:6px}}
@@ -88,7 +83,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 <div class="gw" id="gw">
   <div class="gh">
     <div class="mc" id="mc">&#x1F989;</div>
-    <div class="hi"><div class="ht">凑整法消消乐</div><div class="hs">小升初 &middot; 简便运算专项</div></div>
+    <div class="hi"><div class="ht">速算消消乐</div><div class="hs">小升初 &middot; 心算专项训练</div></div>
     <div class="sp">&#x2B50; <span id="sd">0</span><em> / <span id="sdmax">30</span></em></div>
   </div>
   <div class="ps">
@@ -103,7 +98,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
     <div class="sl">&#x1F446; 再点对应的答案</div>
     <div class="cr" id="ar"></div>
   </div>
-  <div class="gf">凑整法 &middot; 小升初简便运算 &middot; 消消乐挑战</div>
+  <div class="gf">速算消消乐 &middot; 小升初心算 &middot; 每天5分钟</div>
 </div>
 <div class="mo" id="chm">
   <div class="cm2">
@@ -120,8 +115,8 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
   <div class="cert">
     <div class="crb">&#x1F3C6; 荣誉证书</div>
     <span class="cstar">&#x1F31F;</span>
-    <div class="certt" id="certt">简便运算大师</div>
-    <div class="certsub">小升初 &middot; 凑整法专项训练</div>
+    <div class="certt" id="certt">速算达人</div>
+    <div class="certsub">小升初 &middot; 心算专项训练</div>
     <div class="cstat">
       <div class="csi"><div class="cv" id="csco">0</div><div class="cl2">答对题数</div></div>
       <div class="csi"><div class="cv" id="ccb">0</div><div class="cl2">最高连击</div></div>
@@ -134,425 +129,199 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
   </div>
 </div>
 <script>
-// ── 题目生成引擎 ──
+// ────────────────────────────────────
+//  题目生成引擎 —— 五种题型，随机出题
+// ────────────────────────────────────
 function ri(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 function pk(a){return a[Math.floor(Math.random()*a.length)]}
 
-var M25 = {
-  easy:   [4,8,12,16,20],
-  medium: [24,28,32,36,40],
-  hard:   [44,48,52,56,60]
-};
-var M125 = {
-  easy:   [8,16,24,32],
-  medium: [40,48,56,64],
-  hard:   [72,80,88,96]
-};
-
-function gen25(level){
-  var pool = level <= 2 ? M25.easy : level <= 5 ? M25.medium : M25.hard;
-  var n = pk(pool);
-  return {
-    expr: '25 × ' + n,
-    hint: '25×4×' + (n/4),
-    answer: String(25 * n),
-    icon: '📐'
-  };
+// T1: 一位数 × 一位数  (基础乘法口诀)
+function genSingle(){
+  var a = ri(4, 9), b = ri(4, 9);
+  if(a===b) b = b===9 ? 6 : b+1; // 避免 axa
+  return {expr: a+' × '+b, hint: '', answer: String(a*b), icon: '📐', type:'single'};
 }
 
-function gen125(level){
-  var pool = level <= 3 ? M125.easy : level <= 6 ? M125.medium : M125.hard;
-  var n = pk(pool);
-  return {
-    expr: '125 × ' + n,
-    hint: '125×8×' + (n/8),
-    answer: String(125 * n),
-    icon: '🧮'
-  };
+// T2: 两位数 × 一位数  (分解: 34×7 → 30×7 + 4×7)
+function genTwoOne(level){
+  var a = ri(level<=3?12:21, level<=5?50:80), b = ri(2, 9);
+  var tens = Math.floor(a/10)*10, ones = a%10;
+  var hint = ones===0 ? '' : '拆成 '+tens+' + '+ones+' 分别×'+b;
+  return {expr: a+' × '+b, hint: hint, answer: String(a*b), icon: '🧮', type:'twoone'};
 }
 
-function genCompound(level){
-  var base = pk([25, 125]);
-  var a = base === 25 ? pk([4,8]) : pk([8,4]);
-  var bMax = level <= 6 ? 7 : 12;
-  var b = ri(2, bMax);
-  var expr = a + ' × ' + b + ' × ' + base;
-  var step1 = a + '×' + base + '=' + (a*base);
-  var hint = step1 + ', ' + (a*base) + '×' + b + '=' + (a*base*b);
-  return {
-    expr: expr,
-    hint: hint,
-    answer: String(a * b * base),
-    icon: '💡'
-  };
+// T3: 三位连乘  (如 3×4×7, 先算前两个)
+function genTriple(level){
+  var a = ri(2, level<=4?6:9), b = ri(2, level<=4?5:9), c = ri(2, level<=4?5:9);
+  var mid = a*b;
+  var hint = '先算 '+a+'×'+b+'='+mid+', 再×'+c;
+  return {expr: a+' × '+b+' × '+c, hint: hint, answer: String(mid*c), icon: '🔢', type:'triple'};
 }
 
+// T4: 两位数 × 两位数  (简单的, 含整十数)
+function genTwoTwo(level){
+  var a, b;
+  var mode = Math.random();
+  if(mode < 0.5){
+    // Case: 整十数 × 任意两位数  如 30×14
+    a = ri(2, level<=6?4:8) * 10;
+    b = ri(11, level<=4?20:35);
+  } else {
+    // Case: 两位数 × 一位数 的延伸  如 12×15
+    a = ri(11, level<=5?20:40);
+    b = ri(11, level<=5?15:25);
+  }
+  var hint;
+  if(a%10===0){
+    hint = a/10+'0 × '+b+' → 先×'+b+'再×10';
+  } else if(b%10===0){
+    hint = a+' × '+b/10+'0 → 先×'+b/10+'再×10';
+  } else {
+    var tens2 = Math.floor(b/10)*10, ones2 = b%10;
+    hint = '拆: '+a+'×'+tens2+' + '+a+'×'+ones2;
+  }
+  return {expr: a+' × '+b, hint: hint, answer: String(a*b), icon: '💡', type:'twotwo'};
+}
+
+// T5: 凑整特例  (保留25/125/50经典凑整, 但作为题型之一而非全部)
+function genSpecial(level){
+  var base = pk([25, 50, 125]);
+  var n;
+  if(base===25) n = pk([4,8,12,16,20,24,28,32,36]);
+  else if(base===50) n = pk([2,4,6,8,10,12,14,16,18,20]);
+  else n = pk([8,16,24,32,40,48]);
+  var hint = base+'×'+n+' → 凑整法';
+  return {expr: base+' × '+n, hint: hint, answer: String(base*n), icon: '🎯', type:'special'};
+}
+
+// 按关卡级别混搭题型
 function genRound(level){
-  var pairs = [];
-  var used = {};
+  var pairs = [], used = {}, typeMix;
+  if(level<=2)      typeMix = ['single','single','single','twoone'];
+  else if(level<=4) typeMix = ['single','twoone','twoone','triple','triple'];
+  else if(level<=6) typeMix = ['twoone','twoone','triple','twotwo','special'];
+  else if(level<=8) typeMix = ['twoone','triple','twotwo','twotwo','special','special'];
+  else              typeMix = ['twoone','triple','twotwo','twotwo','special','special','twotwo'];
 
-  for (var i = 0; i < 3; i++) {
-    var q, attempts = 0;
-    do {
-      var r = Math.random();
-      if (level <= 2) {
-        q = r < 0.7 ? gen25(level) : gen125(level);
-      } else if (level <= 4) {
-        q = r < 0.4 ? gen25(level) : r < 0.8 ? gen125(level) : genCompound(level);
-      } else if (level <= 6) {
-        q = r < 0.3 ? gen125(level) : r < 0.7 ? genCompound(level) : gen25(level + 2);
-      } else if (level <= 8) {
-        q = r < 0.5 ? genCompound(level) : r < 0.75 ? gen25(level) : gen125(level);
-      } else {
-        q = r < 0.6 ? genCompound(level) : r < 0.8 ? gen125(level) : gen25(level);
-      }
-      attempts++;
-    } while (used[q.answer] && attempts < 20);
-    used[q.answer] = true;
+  for(var i=0;i<3;i++){
+    var q, att=0;
+    do{
+      var t = pk(typeMix);
+      if(t==='single')    q = genSingle();
+      else if(t==='twoone') q = genTwoOne(level);
+      else if(t==='triple') q = genTriple(level);
+      else if(t==='twotwo') q = genTwoTwo(level);
+      else                 q = genSpecial(level);
+      att++;
+    }while(used[q.answer] && att<25);
+    used[q.answer]=true;
     pairs.push(q);
   }
-
-  var bonusText = level >= 10 ? '  (无尽模式)' : '';
-  return {
-    name: '第 ' + (level + 1) + ' / 10 关' + bonusText,
-    pairs: pairs
-  };
+  var bonusLabel = level>=10 ? ' (无尽模式)' : '';
+  return {name:'第 '+(level+1)+' / 10 关'+bonusLabel, pairs:pairs};
 }
 
-// ── 游戏状态 ──
+// ────────────────────────────────────
+//  游戏状态
+// ────────────────────────────────────
 var MAX_ROUNDS = 10;
-var currentRound = 0;
-var matchedInRound = 0;
-var totalScore = 0;
-var maxCombo = 0;
-var currentCombo = 0;
-var selectedCalc = null;
-var gameStartTime = 0;
-var gameEndTime = 0;
-var isLocked = false;
-var isBonusMode = false;
-var bonusRounds = 0;
+var currentRound = 0, matchedInRound = 0, totalScore = 0;
+var maxCombo = 0, currentCombo = 0, selectedCalc = null;
+var gameStartTime = 0, gameEndTime = 0, isLocked = false;
+var isBonusMode = false, bonusRounds = 0;
 
-// ── DOM ──
-var calcRow = document.getElementById('cr');
-var answerRow = document.getElementById('ar');
-var scoreDisplay = document.getElementById('sd');
-var scoreMaxDisplay = document.getElementById('sdmax');
-var progressFill = document.getElementById('pf');
-var progressText = document.getElementById('pt');
-var progressStars = document.getElementById('ps2');
-var roundBadge = document.getElementById('rb');
-var mascot = document.getElementById('mc');
-var toast = document.getElementById('et');
+var calcRow=document.getElementById('cr'), answerRow=document.getElementById('ar');
+var sd=document.getElementById('sd'), pf=document.getElementById('pf');
+var pt=document.getElementById('pt'), ps2=document.getElementById('ps2');
+var rb=document.getElementById('rb'), mc=document.getElementById('mc');
+var toast=document.getElementById('et');
 
-// ── Canvas 粒子 ──
-var canvas = document.getElementById('pc');
-var ctx = canvas.getContext('2d');
-var particles = [];
-function resizeCanvas(){canvas.width = window.innerWidth; canvas.height = window.innerHeight}
-window.addEventListener('resize', resizeCanvas); resizeCanvas();
-
-function spawnParticles(x, y, count, color){
-  for (var i = 0; i < count; i++) {
-    var a = Math.random() * Math.PI * 2;
-    var s = 80 + Math.random() * 280;
-    particles.push({
-      x: x, y: y,
-      vx: Math.cos(a) * s,
-      vy: Math.sin(a) * s - 60,
-      life: 1,
-      decay: 1.2 + Math.random() * 1.8,
-      color: color,
-      size: 4 + Math.random() * 8,
-      shape: Math.random() > 0.5 ? 'c' : 'r'
-    });
+// ────────────────────────────────────
+//  Canvas 粒子
+// ────────────────────────────────────
+var canvas=document.getElementById('pc'), ctx=canvas.getContext('2d'), particles=[];
+function rs(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+window.addEventListener('resize',rs);rs();
+function spawn(x,y,n,color){
+  for(var i=0;i<n;i++){
+    var a=Math.random()*Math.PI*2,s=80+Math.random()*280;
+    particles.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-60,life:1,decay:1.2+Math.random()*1.8,color:color,size:4+Math.random()*8,shape:Math.random()>.5?'c':'r'});
   }
 }
-
 function spawnBurst(){
-  var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
-  var colors = ['#FFC800','#FFD700','#FFAA00','#FF8800','#58CC02','#1CB0F6','#CE82FF','#FF4B4B'];
-  for (var i = 0; i < 120; i++) {
-    var a = Math.random() * Math.PI * 2, s = 150 + Math.random() * 400;
-    particles.push({
-      x: cx, y: cy,
-      vx: Math.cos(a) * s,
-      vy: Math.sin(a) * s - 100,
-      life: 1,
-      decay: 0.6 + Math.random() * 1.2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: 5 + Math.random() * 12,
-      shape: 'c'
-    });
-  }
+  var cx=window.innerWidth/2,cy=window.innerHeight/2,cs=['#FFC800','#FFD700','#FFAA00','#FF8800','#58CC02','#1CB0F6','#CE82FF','#FF4B4B'];
+  for(var i=0;i<120;i++){var a=Math.random()*Math.PI*2,s=150+Math.random()*400;particles.push({x:cx,y:cy,vx:Math.cos(a)*s,vy:Math.sin(a)*s-100,life:1,decay:.6+Math.random()*1.2,color:cs[Math.floor(Math.random()*cs.length)],size:5+Math.random()*12,shape:'c'});}
 }
-
-function animateParticles(){
-  if (!particles.length) { requestAnimationFrame(animateParticles); return; }
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  var dt = Math.min(0.05, 16 / 1000);
-  for (var i = particles.length - 1; i >= 0; i--) {
-    var p = particles[i];
-    p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 320 * dt;
-    p.life -= p.decay * dt;
-    if (p.life <= 0) { particles.splice(i, 1); continue; }
-    ctx.save(); ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
-    if (p.shape === 'c') {
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2); ctx.fill();
-    } else {
-      ctx.translate(p.x, p.y); ctx.rotate(p.life * 4);
-      ctx.fillRect(-p.size/2 * p.life, -p.size/2 * p.life, p.size * p.life, p.size * p.life);
-    }
+function ap(){
+  if(!particles.length){requestAnimationFrame(ap);return}
+  ctx.clearRect(0,0,canvas.width,canvas.height);var dt=Math.min(.05,16/1000);
+  for(var i=particles.length-1;i>=0;i--){
+    var p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=320*dt;p.life-=p.decay*dt;
+    if(p.life<=0){particles.splice(i,1);continue}
+    ctx.save();ctx.globalAlpha=p.life;ctx.fillStyle=p.color;
+    if(p.shape==='c'){ctx.beginPath();ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);ctx.fill()}
+    else{ctx.translate(p.x,p.y);ctx.rotate(p.life*4);ctx.fillRect(-p.size/2*p.life,-p.size/2*p.life,p.size*p.life,p.size*p.life)}
     ctx.restore();
   }
-  requestAnimationFrame(animateParticles);
+  requestAnimationFrame(ap);
 }
-requestAnimationFrame(animateParticles);
+requestAnimationFrame(ap);
 
-// ── 工具函数 ──
-function shuffle(arr){
-  var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var t = a[i]; a[i] = a[j]; a[j] = t;
-  }
-  return a;
+// ────────────────────────────────────
+//  工具
+// ────────────────────────────────────
+function shf(a){var r=a.slice();for(var i=r.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=r[i];r[i]=r[j];r[j]=t;}return r}
+function cc(el){var r=el.getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}}
+function sT(t){toast.textContent=t;toast.classList.add('sh');setTimeout(function(){toast.classList.remove('sh')},800)}
+function mR(e){mc.textContent=e;mc.classList.add('bn');setTimeout(function(){mc.classList.remove('bn')},500)}
+
+// ────────────────────────────────────
+//  渲染 —— 纯 DOM, 无 innerHTML
+// ────────────────────────────────────
+function bcc(p){
+  var icon=document.createElement('div');icon.className='ci';icon.textContent=p.icon;
+  var expr=document.createElement('div');expr.className='ce';expr.textContent=p.expr;
+  var hint=document.createElement('div');hint.className='ch';hint.textContent=p.hint||'\xA0';
+  return[icon,expr,hint];
 }
-
-function cardCenter(el){
-  var r = el.getBoundingClientRect();
-  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+function bac(p){
+  var v=document.createElement('div');v.className='av';v.textContent=p.answer;
+  var l=document.createElement('div');l.className='al';l.textContent='答案';
+  return[v,l];
 }
-
-function showToast(text){
-  toast.textContent = text;
-  toast.classList.add('sh');
-  setTimeout(function(){ toast.classList.remove('sh'); }, 800);
-}
-
-function mascotReact(emoji){
-  mascot.textContent = emoji;
-  mascot.classList.add('bn');
-  setTimeout(function(){ mascot.classList.remove('bn'); }, 500);
-}
-
-// ── 渲染 ──
-function buildCalcCardDOM(pair){
-  var icon = document.createElement('div'); icon.className = 'ci'; icon.textContent = pair.icon;
-  var expr = document.createElement('div'); expr.className = 'ce'; expr.textContent = pair.expr;
-  var hint = document.createElement('div'); hint.className = 'ch'; hint.textContent = pair.hint;
-  return [icon, expr, hint];
-}
-
-function buildAnswerCardDOM(pair){
-  var val = document.createElement('div'); val.className = 'av'; val.textContent = pair.answer;
-  var lbl = document.createElement('div'); lbl.className = 'al'; lbl.textContent = '答案';
-  return [val, lbl];
-}
-
-function renderRound(){
-  var roundData = genRound(currentRound);
-  var pairs = roundData.pairs;
-  var shuffledAnswers = shuffle(pairs);
-
-  roundBadge.textContent = roundData.name;
-
-  // 算式卡
-  calcRow.textContent = '';
-  pairs.forEach(function(pair){
-    var card = document.createElement('div');
-    card.className = 'cc';
-    card.setAttribute('data-answer', pair.answer);
-    var children = buildCalcCardDOM(pair);
-    for (var i = 0; i < children.length; i++) card.appendChild(children[i]);
-    card.addEventListener('click', function(){ onCalcClick(card); });
-    calcRow.appendChild(card);
+function rr(){
+  var rd=genRound(currentRound),pairs=rd.pairs,sAns=shf(pairs);
+  rb.textContent=rd.name;
+  calcRow.textContent='';pairs.forEach(function(p){
+    var card=document.createElement('div');card.className='cc';card.setAttribute('data-answer',p.answer);
+    var kids=bcc(p);for(var k=0;k<kids.length;k++)card.appendChild(kids[k]);
+    card.addEventListener('click',function(){oc(card)});calcRow.appendChild(card);
   });
-
-  // 答案卡
-  answerRow.textContent = '';
-  shuffledAnswers.forEach(function(pair, idx){
-    var card = document.createElement('div');
-    card.className = 'ac a' + idx;
-    card.setAttribute('data-answer', pair.answer);
-    var children = buildAnswerCardDOM(pair);
-    for (var i = 0; i < children.length; i++) card.appendChild(children[i]);
-    card.addEventListener('click', function(){ onAnswerClick(card); });
-    answerRow.appendChild(card);
+  answerRow.textContent='';sAns.forEach(function(p,i){
+    var card=document.createElement('div');card.className='ac a'+i;card.setAttribute('data-answer',p.answer);
+    var kids=bac(p);for(var k=0;k<kids.length;k++)card.appendChild(kids[k]);
+    card.addEventListener('click',function(){oa(card)});answerRow.appendChild(card);
   });
-
-  matchedInRound = 0;
-  selectedCalc = null;
-  isLocked = false;
+  matchedInRound=0;selectedCalc=null;isLocked=false;
 }
 
-// ── 点击处理 ──
-function onCalcClick(card){
-  if (isLocked) return;
-  if (card.classList.contains('mt') || card.classList.contains('hd')) return;
-  var prev = calcRow.querySelector('.cc.sel');
-  if (prev) prev.classList.remove('sel');
-  card.classList.add('sel');
-  selectedCalc = card;
-}
+// ────────────────────────────────────
+//  交互
+// ────────────────────────────────────
+function oc(card){if(isLocked)return;if(card.classList.contains('mt')||card.classList.contains('hd'))return;var p=calcRow.querySelector('.cc.sel');if(p)p.classList.remove('sel');card.classList.add('sel');selectedCalc=card;}
+function oa(card){if(isLocked)return;if(card.classList.contains('mt')||card.classList.contains('hd'))return;if(!selectedCalc){sT('先点一张算式卡哦~');return}var ca=selectedCalc.getAttribute('data-answer'),aa=card.getAttribute('data-answer');if(ca===aa)hC(selectedCalc,card);else hW(selectedCalc,card);}
+function hC(cc2,ac2){isLocked=true;currentCombo++;totalScore++;if(currentCombo>maxCombo)maxCombo=currentCombo;matchedInRound++;cc2.classList.remove('sel');cc2.classList.add('mt');ac2.classList.add('mt');var cp2=cc(cc2),ap2=cc(ac2);spawn(cp2.x,cp2.y,18,'#58CC02');spawn(ap2.x,ap2.y,18,'#FFC800');var ms=['太棒了!🌟','速算成功!✨','完美匹配!🎯','算得真快!⚡','继续加油!💪'];sT(ms[Math.floor(Math.random()*ms.length)]);mR('😍');var pm=MAX_ROUNDS*3;pf.style.width=(totalScore/pm*100)+'%';pt.textContent=totalScore+' 题正确';var sc=Math.min(5,Math.floor(totalScore/(pm/5))),ss='';for(var s=0;s<5;s++)ss+=s<sc?'★':'☆';ps2.textContent=ss;sd.textContent=totalScore;setTimeout(function(){cc2.classList.add('hd');ac2.classList.add('hd');selectedCalc=null;isLocked=false;if(matchedInRound>=3)setTimeout(function(){rC()},350)},420);}
+function hW(cc2,ac2){isLocked=true;currentCombo=0;cc2.classList.remove('sel');cc2.classList.add('wf');ac2.classList.add('wf');sT('再想想~ 🤔');mR('😅');setTimeout(function(){cc2.classList.remove('wf');ac2.classList.remove('wf');selectedCalc=null;isLocked=false},400);}
+function rC(){currentRound++;if(currentRound>=MAX_ROUNDS&&!isBonusMode){gameEndTime=Date.now();sCT()}else{var msg=isBonusMode?('无尽第'+(bonusRounds+1)+'轮! 🔥'):'通关!进入下一关 🚀';sT(msg);mR('🤩');if(isBonusMode)bonusRounds++;setTimeout(function(){rr()},500);}}
+function sCT(){document.getElementById('chm').classList.add('sh');document.getElementById('chmt').textContent='太厉害了!';document.getElementById('chms').textContent='10关全部通关! '+totalScore+' 题正确';pf.style.width='100%';pt.textContent='全部完成!';ps2.textContent='★★★★★';document.getElementById('chbtn2').onclick=oC;document.getElementById('chbtn3').onclick=cC;setTimeout(function(){var ce=document.getElementById('che');ce.textContent='💰';ce.classList.add('op');spawnBurst()},600);}
+function cC(){document.getElementById('chm').classList.remove('sh');isBonusMode=true;bonusRounds=0;currentRound=MAX_ROUNDS;sT('无尽模式! 🔥');mR('🚀');rr();}
+function oC(){document.getElementById('chm').classList.remove('sh');var el=Math.round((gameEndTime-gameStartTime)/1000);document.getElementById('csco').textContent=totalScore;document.getElementById('ccb').textContent=maxCombo;document.getElementById('ctm').textContent=el+'s';var bp=88+Math.floor(Math.random()*11);document.getElementById('cbe').textContent=bp+'%';if(isBonusMode)document.getElementById('certt').textContent='心算全能王';document.getElementById('co2').classList.add('sh');spawnBurst();setTimeout(function(){spawnBurst()},800);}
+document.getElementById('csb').addEventListener('click',function(){var n=document.getElementById('cni').value.trim();if(!n)n='同学';sT('证书已保存,'+n+'!🎓');mR('🎓')});
+document.getElementById('crs').addEventListener('click',rG);
+function rG(){document.getElementById('co2').classList.remove('sh');document.getElementById('certt').textContent='速算达人';currentRound=0;totalScore=0;maxCombo=0;currentCombo=0;selectedCalc=null;isLocked=false;isBonusMode=false;bonusRounds=0;gameStartTime=Date.now();sd.textContent='0';pf.style.width='0%';pt.textContent='开始挑战!';ps2.textContent='☆☆☆☆☆';gameEndTime=0;rr();}
 
-function onAnswerClick(card){
-  if (isLocked) return;
-  if (card.classList.contains('mt') || card.classList.contains('hd')) return;
-  if (!selectedCalc) { showToast('先点一张算式卡哦~'); return; }
-  var calcAns = selectedCalc.getAttribute('data-answer');
-  var cardAns = card.getAttribute('data-answer');
-  if (calcAns === cardAns) { handleCorrect(selectedCalc, card); }
-  else { handleWrong(selectedCalc, card); }
-}
-
-// ── 正确匹配 ──
-function handleCorrect(calcCard, ansCard){
-  isLocked = true;
-  currentCombo++; totalScore++;
-  if (currentCombo > maxCombo) maxCombo = currentCombo;
-  matchedInRound++;
-
-  calcCard.classList.remove('sel');
-  calcCard.classList.add('mt');
-  ansCard.classList.add('mt');
-
-  var cp = cardCenter(calcCard), ap = cardCenter(ansCard);
-  spawnParticles(cp.x, cp.y, 18, '#58CC02');
-  spawnParticles(ap.x, ap.y, 18, '#FFC800');
-
-  var msgs = ['太棒了!🌟','凑整成功!✨','完美匹配!🎯','算得真快!⚡','继续加油!💪'];
-  showToast(msgs[Math.floor(Math.random() * msgs.length)]);
-  mascotReact('😍');
-
-  // 进度更新
-  var progressMax = MAX_ROUNDS * 3;
-  progressFill.style.width = (totalScore / progressMax * 100) + '%';
-  progressText.textContent = totalScore + ' 题正确';
-  var starCount = Math.min(5, Math.floor(totalScore / (progressMax / 5)));
-  var starStr = '';
-  for (var s = 0; s < 5; s++) starStr += s < starCount ? '★' : '☆';
-  progressStars.textContent = starStr;
-  scoreDisplay.textContent = totalScore;
-
-  setTimeout(function(){
-    calcCard.classList.add('hd');
-    ansCard.classList.add('hd');
-    selectedCalc = null;
-    isLocked = false;
-    if (matchedInRound >= 3) {
-      setTimeout(function(){ roundComplete(); }, 350);
-    }
-  }, 420);
-}
-
-// ── 错误匹配 ──
-function handleWrong(calcCard, ansCard){
-  isLocked = true;
-  currentCombo = 0;
-  calcCard.classList.remove('sel');
-  calcCard.classList.add('wf');
-  ansCard.classList.add('wf');
-  showToast('再想想~ 🤔');
-  mascotReact('😅');
-  setTimeout(function(){
-    calcCard.classList.remove('wf'); ansCard.classList.remove('wf');
-    selectedCalc = null; isLocked = false;
-  }, 400);
-}
-
-// ── 通关逻辑 ──
-function roundComplete(){
-  currentRound++;
-  if (currentRound >= MAX_ROUNDS && !isBonusMode) {
-    gameEndTime = Date.now();
-    showTreasureChest();
-  } else {
-    var msg = isBonusMode ? ('无尽第' + (bonusRounds + 1) + '轮! 🔥') : '通关!进入下一关 🚀';
-    showToast(msg);
-    mascotReact('🤩');
-    if (isBonusMode) bonusRounds++;
-    setTimeout(function(){ renderRound(); }, 500);
-  }
-}
-
-function showTreasureChest(){
-  document.getElementById('chm').classList.add('sh');
-  document.getElementById('chmt').textContent = '太厉害了!';
-  document.getElementById('chms').textContent = '10关全部通关! ' + totalScore + ' 题正确';
-  progressFill.style.width = '100%';
-  progressText.textContent = '全部完成!';
-  progressStars.textContent = '★★★★★';
-
-  document.getElementById('chbtn2').onclick = openCertificate;
-  document.getElementById('chbtn3').onclick = continueChallenge;
-
-  setTimeout(function(){
-    var ce = document.getElementById('che');
-    ce.textContent = '💰';
-    ce.classList.add('op');
-    spawnBurst();
-  }, 600);
-}
-
-function continueChallenge(){
-  document.getElementById('chm').classList.remove('sh');
-  isBonusMode = true;
-  bonusRounds = 0;
-  currentRound = MAX_ROUNDS;
-  showToast('无尽模式! 🔥');
-  mascotReact('🚀');
-  renderRound();
-}
-
-function openCertificate(){
-  document.getElementById('chm').classList.remove('sh');
-  var elapsed = Math.round((gameEndTime - gameStartTime) / 1000);
-  document.getElementById('csco').textContent = totalScore;
-  document.getElementById('ccb').textContent = maxCombo;
-  document.getElementById('ctm').textContent = elapsed + 's';
-  var beatPercent = 88 + Math.floor(Math.random() * 11);
-  document.getElementById('cbe').textContent = beatPercent + '%';
-  if (isBonusMode) {
-    document.getElementById('certt').textContent = '凑整法全能王';
-  }
-  document.getElementById('co2').classList.add('sh');
-  spawnBurst();
-  setTimeout(function(){ spawnBurst(); }, 800);
-}
-
-document.getElementById('csb').addEventListener('click', function(){
-  var name = document.getElementById('cni').value.trim();
-  if (!name) name = '同学';
-  showToast('证书已保存,' + name + '!🎓');
-  mascotReact('🎓');
-});
-
-document.getElementById('crs').addEventListener('click', restartGame);
-
-function restartGame(){
-  document.getElementById('co2').classList.remove('sh');
-  document.getElementById('certt').textContent = '简便运算大师';
-  currentRound = 0;
-  totalScore = 0;
-  maxCombo = 0;
-  currentCombo = 0;
-  selectedCalc = null;
-  isLocked = false;
-  isBonusMode = false;
-  bonusRounds = 0;
-  gameStartTime = Date.now();
-  scoreDisplay.textContent = '0';
-  progressFill.style.width = '0%';
-  progressText.textContent = '开始挑战!';
-  progressStars.textContent = '☆☆☆☆☆';
-  gameEndTime = 0;
-  renderRound();
-}
-
-// ── 启动 ──
-gameStartTime = Date.now();
-renderRound();
+// 启动
+gameStartTime=Date.now();rr();
 </script>
 </body>
 </html>
