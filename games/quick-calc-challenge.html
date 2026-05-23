@@ -62,7 +62,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 .cbtn:active{transform:scale(.95);box-shadow:0 1px 0 #D4A000}
 .cbtn2{display:inline-block;padding:14px 28px;background:var(--gr);color:#fff;border:none;border-radius:50px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 var(--gd);transition:transform .15s}
 .cbtn2:active{transform:scale(.95);box-shadow:0 1px 0 var(--gd)}
-.co2{position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.co2{position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 20px 40px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .co2.sh{display:flex}
 .cert{background:#fff;border-radius:24px;padding:28px 20px 24px;text-align:center;max-width:380px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.1);position:relative;border:3px solid var(--go)}
 .crb{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--go);color:#7C5510;padding:4px 20px;border-radius:50px;font-size:11px;font-weight:800;white-space:nowrap}
@@ -84,13 +84,13 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
   <div class="gh">
     <div class="mc" id="mc">&#x1F989;</div>
     <div class="hi"><div class="ht">速算消消乐</div><div class="hs">小升初 &middot; 心算专项训练</div></div>
-    <div class="sp">&#x2B50; <span id="sd">0</span><em> / <span id="sdmax">30</span></em></div>
+    <div class="sp">&#x2B50; <span id="sd">0</span><em> / <span id="sdmax">15</span></em></div>
   </div>
   <div class="ps">
     <div class="pbw"><div class="pbf" id="pf" style="width:0%"></div></div>
     <div class="pl"><span id="pt">开始挑战!</span><span class="pstar" id="ps2">&#x2606;&#x2606;&#x2606;&#x2606;&#x2606;</span></div>
   </div>
-  <div class="rb"><span id="rb">第 1 / 10 关</span></div>
+  <div class="rb"><span id="rb">第 1 / 5 关</span></div>
   <div class="cs">
     <div class="sl">&#x1F447; 点击一张算式卡</div>
     <div class="cr" id="cr"></div>
@@ -145,7 +145,7 @@ function genSingle(){
 
 // T2: 两位数 × 一位数  (分解: 34×7 → 30×7 + 4×7)
 function genTwoOne(level){
-  var a = ri(level<=3?12:21, level<=5?50:80), b = ri(2, 9);
+  var a = ri(level<=1?12:21, level<=2?30:level<=3?50:80), b = ri(2, 9);
   var tens = Math.floor(a/10)*10, ones = a%10;
   var hint = ones===0 ? '' : '拆成 '+tens+' + '+ones+' 分别×'+b;
   return {expr: a+' × '+b, hint: hint, answer: String(a*b), icon: '🧮', type:'twoone'};
@@ -153,7 +153,7 @@ function genTwoOne(level){
 
 // T3: 三位连乘  (如 3×4×7, 先算前两个)
 function genTriple(level){
-  var a = ri(2, level<=4?6:9), b = ri(2, level<=4?5:9), c = ri(2, level<=4?5:9);
+  var a = ri(2, level<=2?6:9), b = ri(2, level<=2?5:9), c = ri(2, level<=2?5:9);
   var mid = a*b;
   var hint = '先算 '+a+'×'+b+'='+mid+', 再×'+c;
   return {expr: a+' × '+b+' × '+c, hint: hint, answer: String(mid*c), icon: '🔢', type:'triple'};
@@ -165,12 +165,12 @@ function genTwoTwo(level){
   var mode = Math.random();
   if(mode < 0.5){
     // Case: 整十数 × 任意两位数  如 30×14
-    a = ri(2, level<=6?4:8) * 10;
-    b = ri(11, level<=4?20:35);
+    a = ri(2, level<=3?4:8) * 10;
+    b = ri(11, level<=2?20:35);
   } else {
     // Case: 两位数 × 一位数 的延伸  如 12×15
-    a = ri(11, level<=5?20:40);
-    b = ri(11, level<=5?15:25);
+    a = ri(11, level<=2?20:40);
+    b = ri(11, level<=2?15:25);
   }
   var hint;
   if(a%10===0){
@@ -198,11 +198,10 @@ function genSpecial(level){
 // 按关卡级别混搭题型
 function genRound(level){
   var pairs = [], used = {}, typeMix;
-  if(level<=2)      typeMix = ['single','single','single','twoone'];
-  else if(level<=4) typeMix = ['single','twoone','twoone','triple','triple'];
-  else if(level<=6) typeMix = ['twoone','twoone','triple','twotwo','special'];
-  else if(level<=8) typeMix = ['twoone','triple','twotwo','twotwo','special','special'];
-  else              typeMix = ['twoone','triple','twotwo','twotwo','special','special','twotwo'];
+  if(level<=1)      typeMix = ['single','single','single','twoone'];
+  else if(level<=2) typeMix = ['single','twoone','twoone','triple'];
+  else if(level<=3) typeMix = ['twoone','triple','twotwo','twotwo','special'];
+  else              typeMix = ['twoone','triple','twotwo','special','special'];
 
   for(var i=0;i<3;i++){
     var q, att=0;
@@ -218,14 +217,14 @@ function genRound(level){
     used[q.answer]=true;
     pairs.push(q);
   }
-  var bonusLabel = level>=10 ? ' (无尽模式)' : '';
-  return {name:'第 '+(level+1)+' / 10 关'+bonusLabel, pairs:pairs};
+  var bonusLabel = level>=5 ? ' (无尽模式)' : '';
+  return {name:'第 '+(level+1)+' / 5 关'+bonusLabel, pairs:pairs};
 }
 
 // ────────────────────────────────────
 //  游戏状态
 // ────────────────────────────────────
-var MAX_ROUNDS = 10;
+var MAX_ROUNDS = 5;
 var currentRound = 0, matchedInRound = 0, totalScore = 0;
 var maxCombo = 0, currentCombo = 0, selectedCalc = null;
 var gameStartTime = 0, gameEndTime = 0, isLocked = false;
@@ -314,11 +313,11 @@ function oa(card){if(isLocked)return;if(card.classList.contains('mt')||card.clas
 function hC(cc2,ac2){isLocked=true;currentCombo++;totalScore++;if(currentCombo>maxCombo)maxCombo=currentCombo;matchedInRound++;cc2.classList.remove('sel');cc2.classList.add('mt');ac2.classList.add('mt');var cp2=cc(cc2),ap2=cc(ac2);var fw=Math.min(currentCombo,15),pn=10+fw*7;spawn(cp2.x,cp2.y,pn,'#58CC02');spawn(ap2.x,ap2.y,pn,'#FFC800');var ms=['太棒了!🌟','速算成功!✨','完美匹配!🎯','算得真快!⚡','继续加油!💪'];sT(ms[Math.floor(Math.random()*ms.length)]);mR('😍');var pm=MAX_ROUNDS*3;pf.style.width=(totalScore/pm*100)+'%';pt.textContent=totalScore+' 题正确';var sc=Math.min(5,Math.floor(totalScore/(pm/5))),ss='';for(var s=0;s<5;s++)ss+=s<sc?'★':'☆';ps2.textContent=ss;sd.textContent=totalScore;setTimeout(function(){cc2.classList.add('hd');ac2.classList.add('hd');selectedCalc=null;isLocked=false;if(matchedInRound>=3)setTimeout(function(){rC()},350)},420);}
 function hW(cc2,ac2){isLocked=true;currentCombo=0;cc2.classList.remove('sel');cc2.classList.add('wf');ac2.classList.add('wf');sT('再想想~ 🤔');mR('😅');setTimeout(function(){cc2.classList.remove('wf');ac2.classList.remove('wf');selectedCalc=null;isLocked=false},400);}
 function rC(){currentRound++;if(currentRound>=MAX_ROUNDS&&!isBonusMode){gameEndTime=Date.now();pf.style.width='100%';pt.textContent='全部完成!';ps2.textContent='★★★★★';sT('🎉 全部通关!');mR('🥳');spawnBurst();setTimeout(function(){spawnBurst()},350);setTimeout(function(){var w=window.innerWidth,h=window.innerHeight;spawn(w*.2,h*.3,50,'#FFC800');spawn(w*.8,h*.35,50,'#1CB0F6');spawn(w*.5,h*.2,50,'#FF4B4B');spawn(w*.3,h*.6,40,'#CE82FF');spawn(w*.7,h*.6,40,'#58CC02')},600);setTimeout(function(){spawnBurst()},950);setTimeout(function(){sCT()},1800)}else{var msg=isBonusMode?('无尽第'+(bonusRounds+1)+'轮! 🔥'):'通关!进入下一关 🚀';sT(msg);mR('🤩');if(isBonusMode)bonusRounds++;setTimeout(function(){rr()},500);}}
-function sCT(){document.getElementById('chm').classList.add('sh');document.getElementById('chmt').textContent='太厉害了!';document.getElementById('chms').textContent='10关全部通关! '+totalScore+' 题正确';document.getElementById('chbtn2').onclick=oC;document.getElementById('chbtn3').onclick=cC;setTimeout(function(){var ce=document.getElementById('che');ce.textContent='💰';ce.classList.add('op')},400);}
+function sCT(){document.getElementById('chm').classList.add('sh');document.getElementById('chmt').textContent='太厉害了!';document.getElementById('chms').textContent='5关全部通关! '+totalScore+' 题正确';document.getElementById('chbtn2').onclick=oC;document.getElementById('chbtn3').onclick=cC;setTimeout(function(){var ce=document.getElementById('che');ce.textContent='💰';ce.classList.add('op')},400);}
 function cC(){document.getElementById('chm').classList.remove('sh');isBonusMode=true;bonusRounds=0;currentRound=MAX_ROUNDS;sT('无尽模式! 🔥');mR('🚀');rr();}
 function oC(){document.getElementById('chm').classList.remove('sh');var el=Math.round((gameEndTime-gameStartTime)/1000);document.getElementById('csco').textContent=totalScore;document.getElementById('ccb').textContent=maxCombo;document.getElementById('ctm').textContent=el+'s';var bp=88+Math.floor(Math.random()*11);document.getElementById('cbe').textContent=bp+'%';if(isBonusMode)document.getElementById('certt').textContent='心算全能王';document.getElementById('co2').classList.add('sh');spawnBurst();setTimeout(function(){spawnBurst()},800);}
 function drawQR(c){var x=c.getContext('2d'),s=80;x.fillStyle='#fff';x.fillRect(0,0,s,s);x.fillStyle='#333';x.fillRect(2,2,18,18);x.fillRect(s-20,2,18,18);x.fillRect(2,s-20,18,18);x.fillStyle='#fff';x.fillRect(6,6,10,10);x.fillRect(s-16,6,10,10);x.fillRect(6,s-16,10,10);x.fillStyle='#333';x.fillRect(8,8,6,6);x.fillRect(s-14,8,6,6);x.fillRect(8,s-14,6,6);for(var i=0;i<50;i++){var rx=Math.floor(Math.random()*18)*4+2,ry=Math.floor(Math.random()*18)*4+2;if((rx<22&&ry<22)||(rx>54&&ry<22)||(rx<22&&ry>54))continue;if(rx>28&&rx<48&&ry>28&&ry<48)continue;x.fillRect(rx,ry,3,3)}}
-document.getElementById('csb').addEventListener('click',function(){var n=document.getElementById('cni').value.trim();if(!n)n='同学';var cni=document.getElementById('cni'),csb=document.getElementById('csb'),crs=document.getElementById('crs');cni.style.opacity='0';cni.style.pointerEvents='none';csb.style.opacity='0';csb.style.pointerEvents='none';crs.style.opacity='0';crs.style.pointerEvents='none';var qrDiv=document.createElement('div');qrDiv.className='qrbox';qrDiv.id='_qrtmp';var qrCanvas=document.createElement('canvas');qrCanvas.width=80;qrCanvas.height=80;drawQR(qrCanvas);var qrTxt=document.createElement('div');qrTxt.className='qrtxt';var t1=document.createElement('div');t1.className='qrt1';t1.textContent='扫码关注【精神档案馆】';var t2=document.createElement('div');t2.className='qrt2';t2.textContent='回复【巧算】领《小升初巧算30讲》';qrTxt.appendChild(t1);qrTxt.appendChild(t2);qrDiv.appendChild(qrCanvas);qrDiv.appendChild(qrTxt);var cert=document.querySelector('.cert');cert.appendChild(qrDiv);html2canvas(cert,{scale:2,backgroundColor:'#FFF8E7'}).then(function(canvas){cert.removeChild(qrDiv);cni.style.opacity='';cni.style.pointerEvents='';csb.style.opacity='';csb.style.pointerEvents='';crs.style.opacity='';crs.style.pointerEvents='';document.getElementById('pimg').src=canvas.toDataURL('image/png');document.getElementById('po').classList.add('sh')})});
+document.getElementById('csb').addEventListener('click',function(){var n=document.getElementById('cni').value.trim();if(!n)n='同学';var cni=document.getElementById('cni'),csb=document.getElementById('csb'),crs=document.getElementById('crs');cni.style.opacity='0';cni.style.pointerEvents='none';csb.style.opacity='0';csb.style.pointerEvents='none';crs.style.opacity='0';crs.style.pointerEvents='none';var qrDiv=document.createElement('div');qrDiv.className='qrbox';qrDiv.id='_qrtmp';var qrCanvas=document.createElement('canvas');qrCanvas.width=80;qrCanvas.height=80;drawQR(qrCanvas);var qrTxt=document.createElement('div');qrTxt.className='qrtxt';var t1=document.createElement('div');t1.className='qrt1';t1.textContent='扫码关注【精神档案馆】';var t2=document.createElement('div');t2.className='qrt2';t2.textContent='回复【巧算】领《小升初巧算30讲》';qrTxt.appendChild(t1);qrTxt.appendChild(t2);qrDiv.appendChild(qrCanvas);qrDiv.appendChild(qrTxt);var cert=document.querySelector('.cert');cert.appendChild(qrDiv);html2canvas(cert,{scale:2,backgroundColor:null,useCORS:true,allowTaint:true}).then(function(canvas){cert.removeChild(qrDiv);cni.style.opacity='';cni.style.pointerEvents='';csb.style.opacity='';csb.style.pointerEvents='';crs.style.opacity='';crs.style.pointerEvents='';document.getElementById('pimg').src=canvas.toDataURL('image/png');document.getElementById('po').classList.add('sh')})});
 document.getElementById('pcls').addEventListener('click',function(){document.getElementById('po').classList.remove('sh')});
 document.getElementById('crs').addEventListener('click',rG);
 function rG(){document.getElementById('co2').classList.remove('sh');document.getElementById('certt').textContent='速算达人';currentRound=0;totalScore=0;maxCombo=0;currentCombo=0;selectedCalc=null;isLocked=false;isBonusMode=false;bonusRounds=0;gameStartTime=Date.now();sd.textContent='0';pf.style.width='0%';pt.textContent='开始挑战!';ps2.textContent='☆☆☆☆☆';gameEndTime=0;rr();}
