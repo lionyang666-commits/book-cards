@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <title>速算消消乐 - 小升初心算训练</title>
 <style>
 :root{--bg:#FFF8E7;--gr:#58CC02;--gd:#46A302;--bl:#1CB0F6;--bd:#1899D6;--or:#FF9600;--od:#E08500;--pu:#CE82FF;--pd:#A568CC;--rd:#FF4B4B;--go:#FFC800;--tx:#4B4B4B;--tl:#777;--cs:0 4px 0 rgba(0,0,0,0.12);--cr:18px}
@@ -27,7 +27,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 .cs{display:flex;flex-direction:column;gap:16px;margin-top:8px;flex:1}
 .sl{font-size:11px;font-weight:700;color:var(--tl);text-align:center;letter-spacing:1px}
 .cr{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.cc{flex:1;min-width:100px;max-width:140px;background:#fff;border-radius:var(--cr);padding:16px 10px;text-align:center;cursor:pointer;box-shadow:var(--cs);border:3px solid transparent;transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s,border-color .15s;position:relative}
+.cc{flex:1;min-width:100px;max-width:140px;background:#fff;border-radius:var(--cr);padding:16px 10px;text-align:center;cursor:pointer;box-shadow:var(--cs);border:3px solid transparent;transition:transform .18s cubic-bezier(.175,.885,.32,1.275),box-shadow .15s,border-color .15s;position:relative}
 .cc:active{transform:scale(.92);box-shadow:0 1px 0 rgba(0,0,0,.12)}
 .cc.sel{border-color:var(--bl);box-shadow:0 0 0 4px rgba(28,176,246,.25),var(--cs);transform:scale(1.04)}
 .cc.mt{border-color:var(--gr);background:#F0FFE0;pointer-events:none;animation:cm .5s ease forwards}
@@ -35,8 +35,8 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 .cc.hd{opacity:0;transform:scale(.8);pointer-events:none}
 .ci{font-size:22px;margin-bottom:4px}.ce{font-size:17px;font-weight:800;color:var(--tx);letter-spacing:.5px;line-height:1.3}.ch{font-size:10px;color:var(--tl);font-weight:600;margin-top:4px;line-height:1.3}
 @keyframes cm{0%{transform:scale(1.04)}50%{transform:scale(1.12)}100%{transform:scale(1);opacity:.6}}
-@keyframes cs2{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
-.ac{flex:1;min-width:100px;max-width:140px;border-radius:var(--cr);padding:18px 10px;text-align:center;cursor:pointer;box-shadow:var(--cs);border:none;transition:transform .15s cubic-bezier(.34,1.56,.64,1),box-shadow .15s,opacity .3s;position:relative;color:#fff}
+@keyframes cs2{0%{transform:scale(.92) translateX(-8px);background:#FFF0F0}15%{transform:scale(.96) translateX(8px);background:#FFF0F0}30%{transform:translateX(-6px);background:#FFF0F0}50%{transform:translateX(5px)}70%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+.ac{flex:1;min-width:100px;max-width:140px;border-radius:var(--cr);padding:18px 10px;text-align:center;cursor:pointer;box-shadow:var(--cs);border:none;transition:transform .18s cubic-bezier(.175,.885,.32,1.275),box-shadow .15s,opacity .3s;position:relative;color:#fff}
 .ac:active{transform:scale(.92);box-shadow:0 1px 0 rgba(0,0,0,.12)}
 .ac.a0{background:var(--bl);box-shadow:0 4px 0 var(--bd)}.ac.a1{background:var(--or);box-shadow:0 4px 0 var(--od)}.ac.a2{background:var(--pu);box-shadow:0 4px 0 var(--pd)}
 .ac.wf{animation:cs2 .4s ease;filter:brightness(.7)}
@@ -74,7 +74,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
 .csbtn{display:block;width:100%;padding:14px;background:var(--gr);color:#fff;border:none;border-radius:50px;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 var(--gd);transition:transform .15s}.csbtn:active{transform:scale(.96);box-shadow:0 1px 0 var(--gd)}
 .crest{display:block;width:100%;padding:10px;margin-top:8px;background:transparent;color:var(--tl);border:none;font-size:14px;font-weight:600;cursor:pointer}
 .gf{text-align:center;padding:16px 0 8px;font-size:10px;color:#C0B8A8;font-weight:600}
-@media(max-width:380px){.cc{padding:12px 8px}.ce{font-size:15px}.av{font-size:22px}.cr{gap:6px}}
+@media(max-width:380px){.cc{padding:12px 8px}.ce{font-size:15px}.av{font-size:22px}.cr{gap:6px}}.po{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:3000;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}.po.sh{display:flex}.piw{max-width:380px;width:90%;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.4)}.ptx{color:#fff;font-size:17px;font-weight:800;margin-top:14px;text-align:center}.ptx2{color:rgba(255,255,255,.65);font-size:12px;font-weight:600;margin-top:6px;text-align:center;line-height:1.5}.qrbox{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,#FFF9E6,#FFF3CD);border-radius:14px;border:2px dashed #E0C870;margin-top:16px;text-align:left}.qrtxt{flex:1}.qrt1{font-size:12px;font-weight:800;color:#7C5510}.qrt2{font-size:10px;color:#A08040;font-weight:600;margin-top:2px}
 </style>
 </head>
 <body>
@@ -128,6 +128,7 @@ body{font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;bac
     <button class="crest" id="crs">再玩一次</button>
   </div>
 </div>
+<div class="po" id="po"><div class="piw"><img id="pimg" src="" alt="证书海报" style="width:100%;display:block;border-radius:16px"></div><div class="ptx">长按图片保存到相册</div><div class="ptx2">发朋友圈可凭截图找老师免费领取《小升初巧算30讲》电子资料</div><button class="cbtn" id="pcls" style="margin-top:16px;color:#7C5510">关闭</button></div>
 <script>
 // ────────────────────────────────────
 //  题目生成引擎 —— 五种题型，随机出题
@@ -316,7 +317,9 @@ function rC(){currentRound++;if(currentRound>=MAX_ROUNDS&&!isBonusMode){gameEndT
 function sCT(){document.getElementById('chm').classList.add('sh');document.getElementById('chmt').textContent='太厉害了!';document.getElementById('chms').textContent='10关全部通关! '+totalScore+' 题正确';document.getElementById('chbtn2').onclick=oC;document.getElementById('chbtn3').onclick=cC;setTimeout(function(){var ce=document.getElementById('che');ce.textContent='💰';ce.classList.add('op')},400);}
 function cC(){document.getElementById('chm').classList.remove('sh');isBonusMode=true;bonusRounds=0;currentRound=MAX_ROUNDS;sT('无尽模式! 🔥');mR('🚀');rr();}
 function oC(){document.getElementById('chm').classList.remove('sh');var el=Math.round((gameEndTime-gameStartTime)/1000);document.getElementById('csco').textContent=totalScore;document.getElementById('ccb').textContent=maxCombo;document.getElementById('ctm').textContent=el+'s';var bp=88+Math.floor(Math.random()*11);document.getElementById('cbe').textContent=bp+'%';if(isBonusMode)document.getElementById('certt').textContent='心算全能王';document.getElementById('co2').classList.add('sh');spawnBurst();setTimeout(function(){spawnBurst()},800);}
-document.getElementById('csb').addEventListener('click',function(){var n=document.getElementById('cni').value.trim();if(!n)n='同学';sT('证书已保存,'+n+'!🎓');mR('🎓')});
+function drawQR(c){var x=c.getContext('2d'),s=80;x.fillStyle='#fff';x.fillRect(0,0,s,s);x.fillStyle='#333';x.fillRect(2,2,18,18);x.fillRect(s-20,2,18,18);x.fillRect(2,s-20,18,18);x.fillStyle='#fff';x.fillRect(6,6,10,10);x.fillRect(s-16,6,10,10);x.fillRect(6,s-16,10,10);x.fillStyle='#333';x.fillRect(8,8,6,6);x.fillRect(s-14,8,6,6);x.fillRect(8,s-14,6,6);for(var i=0;i<50;i++){var rx=Math.floor(Math.random()*18)*4+2,ry=Math.floor(Math.random()*18)*4+2;if((rx<22&&ry<22)||(rx>54&&ry<22)||(rx<22&&ry>54))continue;if(rx>28&&rx<48&&ry>28&&ry<48)continue;x.fillRect(rx,ry,3,3)}}
+document.getElementById('csb').addEventListener('click',function(){var n=document.getElementById('cni').value.trim();if(!n)n='同学';var cni=document.getElementById('cni'),csb=document.getElementById('csb'),crs=document.getElementById('crs');cni.style.opacity='0';cni.style.pointerEvents='none';csb.style.opacity='0';csb.style.pointerEvents='none';crs.style.opacity='0';crs.style.pointerEvents='none';var qrDiv=document.createElement('div');qrDiv.className='qrbox';qrDiv.id='_qrtmp';var qrCanvas=document.createElement('canvas');qrCanvas.width=80;qrCanvas.height=80;drawQR(qrCanvas);var qrTxt=document.createElement('div');qrTxt.className='qrtxt';var t1=document.createElement('div');t1.className='qrt1';t1.textContent='扫码关注【精神档案馆】';var t2=document.createElement('div');t2.className='qrt2';t2.textContent='回复【巧算】领《小升初巧算30讲》';qrTxt.appendChild(t1);qrTxt.appendChild(t2);qrDiv.appendChild(qrCanvas);qrDiv.appendChild(qrTxt);var cert=document.querySelector('.cert');cert.appendChild(qrDiv);html2canvas(cert,{scale:2,backgroundColor:'#FFF8E7'}).then(function(canvas){cert.removeChild(qrDiv);cni.style.opacity='';cni.style.pointerEvents='';csb.style.opacity='';csb.style.pointerEvents='';crs.style.opacity='';crs.style.pointerEvents='';document.getElementById('pimg').src=canvas.toDataURL('image/png');document.getElementById('po').classList.add('sh')})});
+document.getElementById('pcls').addEventListener('click',function(){document.getElementById('po').classList.remove('sh')});
 document.getElementById('crs').addEventListener('click',rG);
 function rG(){document.getElementById('co2').classList.remove('sh');document.getElementById('certt').textContent='速算达人';currentRound=0;totalScore=0;maxCombo=0;currentCombo=0;selectedCalc=null;isLocked=false;isBonusMode=false;bonusRounds=0;gameStartTime=Date.now();sd.textContent='0';pf.style.width='0%';pt.textContent='开始挑战!';ps2.textContent='☆☆☆☆☆';gameEndTime=0;rr();}
 
